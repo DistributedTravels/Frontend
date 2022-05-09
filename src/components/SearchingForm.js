@@ -1,5 +1,6 @@
-﻿import React, { Component} from "react";
-import { Offer }   from './Offer';
+﻿import React, { Component } from "react";
+import { Offer } from './Offer';
+
 import { Form, Field } from "@progress/kendo-react-form";
 import { Checkbox } from "@progress/kendo-react-inputs";
 import destination_dataset from "./destinations_dataset";
@@ -114,9 +115,9 @@ const CheckBox = (fieldProps) => {
             <input
                 type={fieldType}
                 value={value}
-                
-               
-                 />
+
+
+            />
         </div>
     );
 };
@@ -142,8 +143,9 @@ export class SearchingForm extends Component {
             wifi: "Nie"
         }
 
+
     }
-   
+
 
     handleSubmit = (data) => {
         this.setState({
@@ -158,104 +160,109 @@ export class SearchingForm extends Component {
                 children_under_18: data.children_under_18,
                 breakfast: data.breakfast,
                 wifi: data.wifi
-                
+
             }
         });
     };
 
-        render(){
-          
+
+
+
+    render() {
+
         return (
             <div>
-            <div className="border list-group-item mt-1 offer h5">
-            <Form
-                onSubmit={this.handleSubmit.bind(this)}
-                initialValues={{
-                    when: currentDate + "-" + currentDate,
-                    departure: "Warszawa",
-                    destination: "wszędzie",
-                    adults: "1",
-                    children_under_3: "0",
-                    children_under_10: "0",
-                    children_under_18: "0",
-                    breakfast: "Nie",
-                    wifi: "Nie"
-                }}
-                render={(formRenderProps) => (
-                    <form onSubmit={formRenderProps.onSubmit}>
+                <div className="border list-group-item mt-1 offer h5">
+                    <Form
+                        onSubmit={this.handleSubmit.bind(this)}
+                        initialValues={{
+                            when: currentDate + "-" + currentDate,
+                            departure: "Warszawa",
+                            destination: "wszędzie",
+                            adults: "1",
+                            children_under_3: "0",
+                            children_under_10: "0",
+                            children_under_18: "0",
+                            breakfast: "Nie",
+                            wifi: "Nie"
+                        }}
+                        render={(formRenderProps) => (
+                            <form onSubmit={formRenderProps.onSubmit}>
 
-                        <Field
-                            label="Miejsce docelowe"
-                            name="destination"
-                            component={DropDown}
-                            options={destination_dataset} />
+                                <Field
+                                    label="Miejsce docelowe"
+                                    name="destination"
+                                    component={DropDown}
+                                    options={destination_dataset} />
 
-                        <Field
-                            label="Miejsce wyjazdu"
-                            name="departure"
-                            component={DropDown}
-                            options={departure_dataset} />
+                                <Field
+                                    label="Miejsce wyjazdu"
+                                    name="departure"
+                                    component={DropDown}
+                                    options={departure_dataset} />
 
-                        <Field
-                            label="Termin"
-                            name="when"
-                            component={DateInput} />
+                                <Field
+                                    label="Termin"
+                                    name="when"
+                                    component={DateInput} />
 
-                        <Field
-                            label="Liczba osób dorosłych"
-                            name="adults"
-                            fieldType="number"
-                            minValue="1"
-                            maxValue="5"
-                            component={NumberInputAdults} />
+                                <Field
+                                    label="Liczba osób dorosłych"
+                                    name="adults"
+                                    fieldType="number"
+                                    minValue="1"
+                                    maxValue="5"
+                                    component={NumberInputAdults} />
 
-                        <Field
-                            label="Liczba dzieci w wieku do 3 lat"
-                            name="children_under_3"
-                            fieldType="number"
-                            minValue="0"
-                            maxValue="3"
-                            component={NumberInputChildren} />
+                                <Field
+                                    label="Liczba dzieci w wieku do 3 lat"
+                                    name="children_under_3"
+                                    fieldType="number"
+                                    minValue="0"
+                                    maxValue="3"
+                                    component={NumberInputChildren} />
 
-                        <Field
-                            label="Liczba dzieci w wieku do 10 lat"
-                            name="children_under_10"
-                            fieldType="number"
-                            minValue="0"
-                            maxValue="3"
-                            component={NumberInputChildren} />
+                                <Field
+                                    label="Liczba dzieci w wieku do 10 lat"
+                                    name="children_under_10"
+                                    fieldType="number"
+                                    minValue="0"
+                                    maxValue="3"
+                                    component={NumberInputChildren} />
 
-                        
-                        <Field
-                            label="Wifi"
-                            name="wifi"
-                            component={DropDown}
-                            options={checkbox} />
 
-                        <Field
-                            label="Śniadanie"
-                            name="breakfast"
-                            component={DropDown}
-                            options={checkbox} />
+                                <Field
+                                    label="Wifi"
+                                    name="wifi"
+                                    component={DropDown}
+                                    options={checkbox} />
 
-                        <p>
+                                <Field
+                                    label="Śniadanie"
+                                    name="breakfast"
+                                    component={DropDown}
+                                    options={checkbox} />
 
-                        </p>
+                                <p>
 
-                        <input className="submitButton mt-4" type="submit" value="Szukaj" onClick = { () => { this.setState({ showOffers: true }); }} />
+                                </p>
 
-                    </form>
-                )}>
-            </Form>
-           </div>
+
+                                <input className="submitButton mt-4" type="submit" value="Szukaj" onClick={() => { this.setState({ showOffers: true }); }} />
+
+                            </form>
+                        )}>
+                    </Form>
+                </div>
                 <div>
+
                     {this.state.showOffers ? <Offer param={this.state.searchingParam} /> : null}
                     {this.state.showOffers ? () => this.setState({ showOffers: false }) : null}
-                
-            </div>
+
+                </div>
             </div>
 
-            
+
         );
     }
 }

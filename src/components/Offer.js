@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { createAPIEndpoint, ENDPOINTS, BASE_URL } from '../api.js'
+
 import axios from 'axios'
 
 var currentDate = new Date(); //use your date here
@@ -19,8 +19,10 @@ export class Offer extends React.Component {
             children_under_18: "0",
             breakfast: "Nie",
             wifi: "Nie",
-            offers: { 'trips': []}
+            offers: []
         };
+
+
     }
 
     componentWillReceiveProps(nextProps) {
@@ -38,39 +40,25 @@ export class Offer extends React.Component {
         //const num2 = Number(this.state.children_under_18);
         //this.sum = num + num2;
 
-       
+
     }
 
-    componentWillMount() {
-        
-        var date = this.state.when.split("-");
-        var startDate = new Date(date[0]);
-        var endDate = new Date(date[1]);
-        
-        const searchParams = new URLSearchParams();
-        
-        searchParams.append("startDate", startDate);
-        searchParams.append("endDate", endDate);
-        searchParams.append("departure", this.state.departure);
-        searchParams.append("destination", this.state.destination);
-        searchParams.append("adults", this.state.adults);
-        searchParams.append("childrenUnder3", this.state.children_under_3);
-        searchParams.append("childrenUnder10", this.state.children_under_10);
-        searchParams.append("childrenUnder18", this.state.children_under_18);
 
-        //fetch data
-        createAPIEndpoint(ENDPOINTS.offers).fetch().then((res) => {
-            this.setState({ offers: res.data });
-        });
+    componentDidMount() {
+        axios.get(`http://localhost:8090/Offers/GetOffers`)
+            .then(res => {
+              
+                this.setState({ offers: res.data });
+            })
     }
 
     render() {
 
-     
+
         return (
-            
+
             <div className="border list-group-item mt-1 offer h5">
-              
+
                 <h3 className="text-center mt-5">Wyniki wyszukiwania</h3>
                 <h2 > Liczba dorosłych: {this.state.adults}  </h2>
                 <h2> Kierunek: {this.state.destination}</h2>
@@ -78,17 +66,17 @@ export class Offer extends React.Component {
                 <h2> Termin: {this.state.when}</h2>
                 <h2> Śniadanie: {this.state.breakfast}</h2>
                 <h2> Wifi: {this.state.wifi}</h2>
-                <ul className="list-group">
+                <ul>
                     {
-                        this.state.offers.trips.map(
-                            offer =>
-                                <li key={offer.destinations} className="border list-group-item mt-5 offer">
-                                    
-                                    <h5> {offer.hotelName} </h5>
-                                    </li>
-                        )
-                    }
+                        this.state.offers
+                            .map(offer =>
+                                <li key={offer.id} className="border list-group-item mt-5 offer">
+                                    <h5>{offer.hotelName}</h5>
+                                    <h5>{offer.destination}</h5>
 
+                                </li>
+                            )
+                    }
                 </ul>
 
             </div>
