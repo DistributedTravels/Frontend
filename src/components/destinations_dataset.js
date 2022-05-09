@@ -1,5 +1,5 @@
 ﻿export default [
-    "wszędzie",
+    "gdziekolwiek",
     "Alanya",
     "Albania",
     "Albena",

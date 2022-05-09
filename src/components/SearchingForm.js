@@ -2,10 +2,10 @@
 import { Offer } from './Offer';
 
 import { Form, Field } from "@progress/kendo-react-form";
-import { Checkbox } from "@progress/kendo-react-inputs";
+
 import destination_dataset from "./destinations_dataset";
 import departure_dataset from "./departure_dataset";
-import checkbox from "./checkbox";
+
 
 import DateRangePicker from 'react-bootstrap-daterangepicker';
 // a tool like webpack, you can do the following:
@@ -17,6 +17,8 @@ import 'bootstrap-daterangepicker/daterangepicker.css';
 var currentDate = new Date(); //use your date here
 currentDate = currentDate.toLocaleDateString('en-US'); // "en-US" gives date in US Format - mm/dd/yy
 
+var baseDate = "07/01/2022";
+
 
 
 const DateInput = (fieldProps) => {
@@ -27,7 +29,7 @@ const DateInput = (fieldProps) => {
             <label>
                 {label}
             </label>
-            <DateRangePicker onApply={onChange} onCancel={(event, picker) => handleDateCancel(event, picker)} initialSettings={{ minDate: new Date(), startDate: new Date(), endDate: '9/30/2023' }}>
+            <DateRangePicker onApply={onChange} onCancel={(event, picker) => handleDateCancel(event, picker)} initialSettings={{ minDate: new Date("07/01/2022"), startDate: new Date("07/01/2022"), endDate: '09/30/2023' }}>
                 <input readOnly
                     value={value}
                     type="text" />
@@ -132,15 +134,13 @@ export class SearchingForm extends Component {
     state = {
         showOffers: false,
         searchingParam: {
-            when: currentDate + "-" + currentDate,
+            when: baseDate + "-" + baseDate,
             departure: "Warszawa",
-            destination: "wszędzie",
+            destination: "gdziekolwiek",
             adults: "1",
             children_under_3: "0",
             children_under_10: "0",
-            children_under_18: "0",
-            breakfast: "Nie",
-            wifi: "Nie"
+            children_under_18: "0"
         }
 
 
@@ -157,9 +157,7 @@ export class SearchingForm extends Component {
                 adults: data.adults,
                 children_under_3: data.children_under_3,
                 children_under_10: data.children_under_10,
-                children_under_18: data.children_under_18,
-                breakfast: data.breakfast,
-                wifi: data.wifi
+                children_under_18: data.children_under_18
 
             }
         });
@@ -176,15 +174,14 @@ export class SearchingForm extends Component {
                     <Form
                         onSubmit={this.handleSubmit.bind(this)}
                         initialValues={{
-                            when: currentDate + "-" + currentDate,
+                            when: "07/01/2022-07/01/2022",
                             departure: "Warszawa",
-                            destination: "wszędzie",
+                            destination: "gdziekolwiek",
                             adults: "1",
                             children_under_3: "0",
                             children_under_10: "0",
-                            children_under_18: "0",
-                            breakfast: "Nie",
-                            wifi: "Nie"
+                            children_under_18: "0"
+                            
                         }}
                         render={(formRenderProps) => (
                             <form onSubmit={formRenderProps.onSubmit}>
@@ -230,25 +227,22 @@ export class SearchingForm extends Component {
                                     maxValue="3"
                                     component={NumberInputChildren} />
 
-
                                 <Field
-                                    label="Wifi"
-                                    name="wifi"
-                                    component={DropDown}
-                                    options={checkbox} />
+                                    label="Liczba dzieci w wieku do 18 lat"
+                                    name="children_under_18"
+                                    fieldType="number"
+                                    minValue="0"
+                                    maxValue="3"
+                                    component={NumberInputChildren} />
 
-                                <Field
-                                    label="Śniadanie"
-                                    name="breakfast"
-                                    component={DropDown}
-                                    options={checkbox} />
+
 
                                 <p>
 
                                 </p>
 
 
-                                <input className="submitButton mt-4" type="submit" value="Szukaj" onClick={() => { this.setState({ showOffers: true }); }} />
+                                <input type="submit" value="Szukaj" onClick={() => { this.setState({ showOffers: true }); }} />
 
                             </form>
                         )}>

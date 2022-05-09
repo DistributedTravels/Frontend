@@ -5,7 +5,8 @@ import { Layout } from './components/Layout';
 import { Home } from './components/Home';
 import { Destinations } from './components/Destinations';
 import { Offer } from './components/Offer';
-import {Login}  from "./components/Login"
+import { Login } from "./components/Login";
+import { Reservation } from "./components/Reservation";
 import './custom.css'
 
 
@@ -22,6 +23,7 @@ export default class App extends Component {
         <Route path='/destinations' component={Destinations} />
             <Route path="/login" component={Login} />
             <Route path="/offer" component={Offer} />
+            <Route path="/reservation" component={Reservation} />
       </Layout>
     );
   }
