@@ -5,6 +5,8 @@ import axios from 'axios'
 var currentDate = new Date(); //use your date here
 currentDate = currentDate.toLocaleDateString('en-US'); // "en-US" gives date in US Format - mm/dd/yy
 
+const equals = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+
 export class Offer extends React.Component {
 
     constructor(props) {
@@ -19,6 +21,7 @@ export class Offer extends React.Component {
             children_under_18: "0",
             breakfast: "Nie",
             wifi: "Nie",
+            previousOffers: [1,2],
             offers: []
         };
 
@@ -44,12 +47,17 @@ export class Offer extends React.Component {
     }
 
 
-    componentDidMount() {
-        axios.get(`http://localhost:8090/Offers/GetOffers`)
-            .then(res => {
-              
-                this.setState({ offers: res.data });
-            })
+    componentDidUpdate() {
+        if (!equals(this.state.offers, this.state.previousOffers)) {
+            axios.get(`http://localhost:8090/Offers/GetOffers`)
+                .then(res => {
+
+                    this.setState({ previousOffers: this.state.offers });
+                    this.setState({ offers: res.data });
+
+                })
+        }
+       
     }
 
     render() {
