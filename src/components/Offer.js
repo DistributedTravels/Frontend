@@ -6,6 +6,7 @@ const webAPI_URL = "http://localhost:8090";
 const offersROUTE = "/Offers/GetOffers";
 
 import axios from 'axios'
+import { SingleOffer } from './SingleOffer';
 
 var currentDate = new Date(); //use your date here
 currentDate = currentDate.toLocaleDateString('en-US'); // "en-US" gives date in US Format - mm/dd/yy
@@ -70,12 +71,7 @@ export class Offer extends React.Component {
             children_under_10: "0",
             children_under_18: "0",
             previousOffers: [1,2],
-            offers: [1, 4],
-            number_of_2_room: "0",
-            number_of_apartaments: "0",
-            transport: "Dojazd własny",
-            breakfast: "Nie",
-            wifi: "Nie"
+            offers: [1, 4]
             
         };
     }
@@ -160,47 +156,7 @@ export class Offer extends React.Component {
        
     }
 
-    handleSubmit = (data) => {
-        console.log(data);
-
-        this.setState({
-         
-            number_of_2_room: data.number_of_2_room,
-            number_of_apartaments: data.number_of_apartaments,
-            transport: data.transport,
-            breakfast: data.breakfast,
-            wifi: data.wifi
-
-           
-        });
-        console.log(this.state.breakfast);
-       
-        
-        const date = this.state.when;
-        const dates = date.split("-");
-        const start = dates[0].replaceAll("/", "-");
-        const end = dates[1].replaceAll("/", "-");
-
-        const parameters = {
-            startDate: start,
-            endDate: end,
-            departure: this.state.departure,
-            destination: this.state.destination,
-            adults: this.state.adults,
-            children_under_3: this.state.children_under_3,
-            children_under_10: this.state.children_under_10,
-            children_under_18: this.state.children_under_18,
-            number_of_2_room: this.state.number_of_2_room,
-            number_of_apartaments: this.state.number_of_apartaments,
-            transport: this.state.transport,
-            breakfast: this.state.breakfast,
-            wifi: this.state.wifi
-        }
-        const myUrlWithParams = new URLSearchParams(parameters);
-
-        window.location.href = "/reservation?" + myUrlWithParams;
-    };
-
+  
     
 
     render() {
@@ -221,67 +177,7 @@ export class Offer extends React.Component {
                                     <h4>{offer.hotelName}</h4>
                                     <h5>{offer.destination}</h5>
 
-                                    <Form
-                                        
-                                        initialValues={{
-                                            number_of_2_room: "0",
-                                            number_of_apartaments: "0",
-                                            transport: "Dojazd własny",
-                                            breakfast: "Nie",
-                                            wifi: "Nie"
-                                        }}
-                                        render={(formRenderProps) => (
-                                            <form onSubmit={formRenderProps.onSubmit}>
-
-                                                <Field
-                                                    label="Liczba pokojów 2-osobowych"
-                                                    name="number_of_2_room"
-                                                    fieldType="number"
-                                                    minValue="0"
-                                                    maxValue="5"
-                                                    component={NumberInput}
-                                                  
-                                                    />
-
-                                                <Field
-                                                    label="Liczba apartamentów 4-osobowych"
-                                                    name="number_of_apartaments"
-                                                    fieldType="number"
-                                                    minValue="0"
-                                                    maxValue="5"
-                                                    component={NumberInput}
-                                                    />
-
-                                                <Field
-                                                    label="Wifi"
-                                                    name="wifi"
-                                                    component={DropDown}
-                                                    options={checkbox}
-                                                    />                                               
-
-                                                <Field
-                                                    label="Śniadanie"
-                                                    name="breakfast"
-                                                    component={DropDown}
-                                                    options={checkbox}
-                                                    />                                               
-
-                                                <Field
-                                                    label="Transport"
-                                                    name="transport"
-                                                    component={DropDown}
-                                                    options={transport}
-                                                    />                                              
-
-                                                <p>
-
-                                                </p>
-
-                                                <input type="submit" onClick={this.handleSubmit.bind(this, offer)} value="Rezerwuj" />
-
-                                            </form>
-                                        )}>
-                                    </Form>
+                                    <SingleOffer param={this.state}></SingleOffer>
 
                                    
                                    
