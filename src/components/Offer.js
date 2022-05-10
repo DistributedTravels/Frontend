@@ -12,6 +12,8 @@ var currentDate = new Date(); //use your date here
 currentDate = currentDate.toLocaleDateString('en-US'); // "en-US" gives date in US Format - mm/dd/yy
 var baseDate = "07/01/2022";
 
+
+
 const equals = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 
 
@@ -71,7 +73,9 @@ export class Offer extends React.Component {
             children_under_10: "0",
             children_under_18: "0",
             previousOffers: [1,2],
-            offers: [1, 4]
+            offers: [1, 4],
+            offerId: "0",
+            hotelName: "defaultHotel"
             
         };
     }
@@ -85,6 +89,9 @@ export class Offer extends React.Component {
         this.setState({ children_under_3: nextProps.param.children_under_3 })
         this.setState({ children_under_10: nextProps.param.children_under_10 })
         this.setState({ children_under_18: nextProps.param.children_under_18 })
+
+        console.log(this.state.when);
+        
 
         //const num = Number(this.state.adults);
         //const num2 = Number(this.state.children_under_18);
@@ -109,6 +116,9 @@ export class Offer extends React.Component {
         myUrlWithParams.searchParams.append("children_under_3", this.state.children_under_3);
         myUrlWithParams.searchParams.append("children_under_10", this.state.children_under_10);
         myUrlWithParams.searchParams.append("children_under_18", this.state.children_under_18);
+
+        console.log(start);
+        console.log(end);
 
         axios.get(myUrlWithParams.href)
             .then(res => {
@@ -157,7 +167,12 @@ export class Offer extends React.Component {
     }
 
   
-    
+    handleClick(offer) {
+        this.setState({
+            offerId: offer.id,
+            hotelName: offer.hotelName
+        });
+    }
 
     render() {
 
@@ -167,13 +182,18 @@ export class Offer extends React.Component {
             <div className="border list-group-item mt-1 offer h5">
 
                 <h3 className="text-center mt-5">Wyniki wyszukiwania</h3>
+               
                 
 
                 <ul>
                     {
                         this.state.offers
                             .map(offer =>
-                                <li key={offer.id} className="border list-group-item mt-5 offer">
+
+
+                                
+                            
+                                <li key={offer.id} className="border list-group-item mt-5 offer" onClick={() => this.handleClick(offer)}>
                                     <h4>{offer.hotelName}</h4>
                                     <h5>{offer.destination}</h5>
 

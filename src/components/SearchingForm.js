@@ -148,6 +148,7 @@ export class SearchingForm extends Component {
 
 
     handleSubmit = (data) => {
+       
         this.setState({
             searchingParam: {
                 ...this.state.searchingParam,
@@ -159,8 +160,11 @@ export class SearchingForm extends Component {
                 children_under_10: data.children_under_10,
                 children_under_18: data.children_under_18
 
+               
+
             }
         });
+       
     };
 
 
@@ -243,13 +247,14 @@ export class SearchingForm extends Component {
 
 
                                 <input type="submit" value="Szukaj" onClick={() => { this.setState({ showOffers: true }); }} />
+                                <h5>{this.state.searchingParam.when}</h5>
 
                             </form>
                         )}>
                     </Form>
                 </div>
                 <div>
-
+                    
                     {this.state.showOffers ? <Offer param={this.state.searchingParam} /> : null}
                     {this.state.showOffers ? () => this.setState({ showOffers: false }) : null}
 

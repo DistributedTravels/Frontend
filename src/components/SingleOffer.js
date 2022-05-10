@@ -10,6 +10,15 @@ import axios from 'axios'
 var currentDate = new Date(); //use your date here
 currentDate = currentDate.toLocaleDateString('en-US'); // "en-US" gives date in US Format - mm/dd/yy
 var baseDate = "07/01/2022";
+var dat = "07/01/2022";
+var des = "wszędzie";
+var dep = "Warszawa";
+var ad = "1";
+var ch3 = "0";
+var ch10 = "0";
+var ch18 = "0";
+var offerId = "0";
+var hotelName = "defaultHotel";
 
 const equals = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 
@@ -77,11 +86,11 @@ export class SingleOffer extends React.Component {
             breakfast: "Nie",
             wifi: "Nie"
 
-        }
-    
+    }
 
 
     componentWillReceiveProps(nextProps) {
+        console.log(nextProps);
         this.setState({ when: nextProps.param.when })
         this.setState({ departure: nextProps.param.departure })
         this.setState({ destination: nextProps.param.destination })
@@ -89,24 +98,26 @@ export class SingleOffer extends React.Component {
         this.setState({ children_under_3: nextProps.param.children_under_3 })
         this.setState({ children_under_10: nextProps.param.children_under_10 })
         this.setState({ children_under_18: nextProps.param.children_under_18 })
+        dat = nextProps.param.when;
+        dep = nextProps.param.departure;
+        des = nextProps.param.destination;
+        ad = nextProps.param.adults;
+        ch3 = nextProps.param.children_under_3;
+        ch10 = nextProps.param.children_under_10;
+        ch18 = nextProps.param.children_under_18;
+        
+
+        console.log(this.state.when);
 
     }
 
     
 
     handleSubmit = (data) => {
-        console.log(data);
-        //this.setState({
-        //    number_of_2_room: data.number_of_2_room,
-        //    number_of_apartaments: data.number_of_apartaments,
-        //    transport: data.transport,
-        //    breakfast: data.breakfast,
-        //    wifi: data.wifi
-        //});
-        console.log(this.state);
-       
+        console.log(dat);
 
-        const date = this.state.when;
+        //const date = this.state.when;
+        const date = dat;
         const dates = date.split("-");
         const start = dates[0].replaceAll("/", "-");
         const end = dates[1].replaceAll("/", "-");
@@ -131,12 +142,14 @@ export class SingleOffer extends React.Component {
         const parameters = {
             startDate: start,
             endDate: end,
-            departure: this.state.departure,
-            destination: this.state.destination,
-            adults: this.state.adults,
-            children_under_3: this.state.children_under_3,
-            children_under_10: this.state.children_under_10,
-            children_under_18: this.state.children_under_18,
+            departure: dep,
+            destination: des,
+            adults: ad,
+            children_under_3: ch3,
+            children_under_10: ch10,
+            children_under_18: ch18,
+            offerId: offerId,
+            hotelName: hotelName,
             number_of_2_room: data.number_of_2_room,
             number_of_apartaments: data.number_of_apartaments,
             transport: data.transport,
