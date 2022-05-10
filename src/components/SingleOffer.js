@@ -111,6 +111,23 @@ export class SingleOffer extends React.Component {
         const start = dates[0].replaceAll("/", "-");
         const end = dates[1].replaceAll("/", "-");
 
+        if (data.number_of_2_room === undefined) {
+            data.number_of_2_room= "0";
+        }
+        if (data.number_of_apartaments === undefined) {
+            data.number_of_apartaments= "0";
+        }
+        if (data.transport === undefined) {
+            data.transport= "Dojazd własny";
+        }
+        if (data.breakfast === undefined) {
+            data.breakfast= "Nie";
+        }
+        if (data.wifi === undefined) {
+            data.wifi= "Nie";
+        }
+        
+
         const parameters = {
             startDate: start,
             endDate: end,
@@ -157,7 +174,7 @@ export class SingleOffer extends React.Component {
                                     label="Liczba pokojów 2-osobowych"
                                     name="number_of_2_room"
                                     fieldType="number"
-                                    minValue="1"
+                                    minValue="0"
                                     maxValue="5"
                                     component={NumberInput} />
 
@@ -165,7 +182,7 @@ export class SingleOffer extends React.Component {
                                     label="Liczba apartamentów"
                                     name="number_of_apartaments"
                                     fieldType="number"
-                                    minValue="1"
+                                    minValue="0"
                                     maxValue="5"
                                     component={NumberInput} />
                                 <Field
@@ -192,7 +209,7 @@ export class SingleOffer extends React.Component {
                                 </p>
 
 
-                                <input type="submit" value="Szukaj"  />
+                                <input type="submit" value="Szukaj" onClick={this.handleSubmit} />
 
                             </form>
                         )}>
