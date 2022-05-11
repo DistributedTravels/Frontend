@@ -5,67 +5,20 @@ import checkbox from "./checkbox";
 const webAPI_URL = "http://localhost:8090";
 const offersROUTE = "/Offers/GetOffers";
 
-import axios from 'axios'
-import { SingleOffer } from './SingleOffer';
+import axios from 'axios';
 
 var currentDate = new Date(); //use your date here
 currentDate = currentDate.toLocaleDateString('en-US'); // "en-US" gives date in US Format - mm/dd/yy
 var baseDate = "07/01/2022";
 
-
-
 const equals = (a, b) => JSON.stringify(a) === JSON.stringify(b);
-
-
-
-const NumberInput = (fieldProps) => {
-    const {
-        fieldType, minValue, maxValue, label, value,
-        onChange, onBlur, onFocus,
-    } = fieldProps;
-    return (
-        <div onBlur={onBlur} onFocus={onFocus}>
-            <label>
-                {label}
-            </label>
-            <input
-                type={fieldType}
-                min={minValue}
-                max={maxValue}
-                value={value}
-                onChange={onChange} />
-        </div>
-    );
-};
-
-const DropDown = ({ label, value, options,
-    onChange, onBlur, onFocus }) => {
-    return (
-        <div onBlur={onBlur} onFocus={onFocus}>
-            <label>
-                {label}
-            </label>
-            <select
-                value={value}
-                onChange={onChange}>
-                {options.map(option => (
-                    <option key={option}>{option}</option>
-                ))}
-            </select>
-        </div>
-    )
-}
-
-
-
-
 
 export class Offer extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            when: baseDate + "-" + baseDate,
+            when: baseDate+"-"+baseDate,
             departure: "Warszawa",
             destination: "gdziekolwiek",
             adults: "1",
@@ -80,7 +33,6 @@ export class Offer extends React.Component {
         };
     }
   
-
     componentWillReceiveProps(nextProps) {
         this.setState({ when: nextProps.param.when })
         this.setState({ departure: nextProps.param.departure })
@@ -90,14 +42,9 @@ export class Offer extends React.Component {
         this.setState({ children_under_10: nextProps.param.children_under_10 })
         this.setState({ children_under_18: nextProps.param.children_under_18 })
 
-        console.log(this.state.when);
-        
-
         //const num = Number(this.state.adults);
         //const num2 = Number(this.state.children_under_18);
         //this.sum = num + num2;
-
-
     }
 
     componentDidMount() {
@@ -117,9 +64,6 @@ export class Offer extends React.Component {
         myUrlWithParams.searchParams.append("children_under_10", this.state.children_under_10);
         myUrlWithParams.searchParams.append("children_under_18", this.state.children_under_18);
 
-        console.log(start);
-        console.log(end);
-
         axios.get(myUrlWithParams.href)
             .then(res => {
 
@@ -134,8 +78,7 @@ export class Offer extends React.Component {
         //        this.setstate({ previousoffers: this.state.offers });
         //        this.setstate({ offers: res.data });
 
-        //    })
-        
+        //    })   
 
     }
     componentDidUpdate() {
@@ -166,40 +109,51 @@ export class Offer extends React.Component {
        
     }
 
-  
-    handleClick(offer) {
-        this.setState({
-            offerId: offer.id,
-            hotelName: offer.hotelName
-        });
-    }
+    handleClick = offer => () => {
+
+        const date = this.state.when;
+        const dates = date.split("-");
+        var start = dates[0].replaceAll("/", "-");
+        start = start.replaceAll(" ", "");
+        var end = dates[1].replaceAll("/", "-");
+        end = end.replaceAll(" ", "");
+
+
+        const parameters = {
+            offerId: offer.offerId,
+            hotelName: offer.hotelName,
+            startDate: start,
+            endDate: end,
+            departure: this.state.departure,
+            destination: this.state.destination,
+            adults: this.state.adults,
+            children_under_3: this.state.children_under_3,
+            children_under_10: this.state.children_under_10,
+            children_under_18: this.state.children_under_18
+
+        }
+
+        const myUrlWithParams = new URLSearchParams(parameters);
+
+        window.location.href = "/offerForm?" + myUrlWithParams;
+    };
 
     render() {
-
-
+ 
         return (
 
             <div className="border list-group-item mt-1 offer h5">
-
                 <h3 className="text-center mt-5">Wyniki wyszukiwania</h3>
-               
-                
-
+              
                 <ul>
                     {
                         this.state.offers
                             .map(offer =>
-
-
-                                
                             
-                                <li key={offer.id} className="border list-group-item mt-5 offer" onClick={() => this.handleClick(offer)}>
+                                <li key={offer.id} className="border list-group-item mt-5 offer">
                                     <h4>{offer.hotelName}</h4>
                                     <h5>{offer.destination}</h5>
-
-                                    <SingleOffer param={this.state}></SingleOffer>
-
-                                   
+                                    <button className="search" onClick={this.handleClick(offer)}>Sprawdź ofertę</button> 
                                    
                                 </li>
                             )

@@ -6,6 +6,7 @@ import { Home } from './components/Home';
 import { Destinations } from './components/Destinations';
 import { Offer } from './components/Offer';
 import { SingleOffer } from './components/SingleOffer';
+import { OfferForm } from './components/OfferForm';
 import { Login } from "./components/Login";
 import { Reservation } from "./components/Reservation";
 import './custom.css'
@@ -25,6 +26,7 @@ export default class App extends Component {
             <Route path="/login" component={Login} />
             <Route path="/offer" component={Offer} />
             <Route path="/singleoffer" component={SingleOffer} />
+            <Route path="/offerForm" component={OfferForm} />
             <Route path="/reservation" component={Reservation} />
       </Layout>
     );

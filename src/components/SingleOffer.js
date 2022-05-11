@@ -20,6 +20,8 @@ var ch18 = "0";
 var offerId = "0";
 var hotelName = "defaultHotel";
 
+
+
 const equals = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 
 
@@ -71,7 +73,7 @@ export class SingleOffer extends React.Component {
 
    
         state = {
-            when: baseDate + "-" + baseDate,
+            when: baseDate+"-"+baseDate,
             departure: "Warszawa",
             destination: "gdziekolwiek",
             adults: "1",
@@ -91,13 +93,7 @@ export class SingleOffer extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         console.log(nextProps);
-        this.setState({ when: nextProps.param.when })
-        this.setState({ departure: nextProps.param.departure })
-        this.setState({ destination: nextProps.param.destination })
-        this.setState({ adults: nextProps.param.adults })
-        this.setState({ children_under_3: nextProps.param.children_under_3 })
-        this.setState({ children_under_10: nextProps.param.children_under_10 })
-        this.setState({ children_under_18: nextProps.param.children_under_18 })
+        
         dat = nextProps.param.when;
         dep = nextProps.param.departure;
         des = nextProps.param.destination;
@@ -105,9 +101,9 @@ export class SingleOffer extends React.Component {
         ch3 = nextProps.param.children_under_3;
         ch10 = nextProps.param.children_under_10;
         ch18 = nextProps.param.children_under_18;
-        
-
-        console.log(this.state.when);
+        offerId = nextProps.param.offerId;
+        hotelName = nextProps.param.hotelName;
+       
 
     }
 
