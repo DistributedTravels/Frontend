@@ -10,6 +10,8 @@ import { CheckOfferForDestination } from './components/checkOfferForDestination'
 import { Login } from "./components/Login";
 import { Reservation } from "./components/Reservation";
 import { Payment } from "./components/Payment";
+import { Error } from "./components/Error";
+import { PaymentInformation } from "./components/PaymentInformation";
 import './custom.css'
 
 
@@ -28,6 +30,8 @@ export default class App extends Component {
             <Route path="/checkOfferForDestination" component={CheckOfferForDestination} />
             <Route path="/reservation" component={Reservation} />
             <Route path="/payment" component={Payment} />
+            <Route path="/error" component={Error} />
+            <Route path="/paymentInformation" component={PaymentInformation} />
       </Layout>
     );
   }
