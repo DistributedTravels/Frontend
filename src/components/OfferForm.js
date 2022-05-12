@@ -66,6 +66,8 @@ export class OfferForm extends Component {
 
 
         const parameters = {
+            offerId: this.state.offerId,
+            hotelName: this.state.hotelName,
             startDate: this.state.startDate,
             endDate: this.state.endDate,
             departure: this.state.departure,
@@ -74,8 +76,6 @@ export class OfferForm extends Component {
             children_under_3: this.state.children_under_3,
             children_under_10: this.state.children_under_10,
             children_under_18: this.state.children_under_18,
-            offerId: this.state.offerId,
-            hotelName: this.state.hotelName,
             number_of_2_room: data.number_of_2_room,
             number_of_apartaments: data.number_of_apartaments,
             transport: data.transport,

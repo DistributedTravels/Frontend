@@ -5,17 +5,16 @@ import { Layout } from './components/Layout';
 import { Home } from './components/Home';
 import { Destinations } from './components/Destinations';
 import { Offer } from './components/Offer';
-import { SingleOffer } from './components/SingleOffer';
 import { OfferForm } from './components/OfferForm';
+import { CheckOfferForDestination } from './components/checkOfferForDestination';
 import { Login } from "./components/Login";
 import { Reservation } from "./components/Reservation";
+import { Payment } from "./components/Payment";
 import './custom.css'
 
 
 export default class App extends Component {
     static displayName = App.name;
-
-
 
   render () {
     return (
@@ -25,9 +24,10 @@ export default class App extends Component {
         <Route path='/destinations' component={Destinations} />
             <Route path="/login" component={Login} />
             <Route path="/offer" component={Offer} />
-            <Route path="/singleoffer" component={SingleOffer} />
             <Route path="/offerForm" component={OfferForm} />
+            <Route path="/checkOfferForDestination" component={CheckOfferForDestination} />
             <Route path="/reservation" component={Reservation} />
+            <Route path="/payment" component={Payment} />
       </Layout>
     );
   }

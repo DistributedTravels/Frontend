@@ -16,13 +16,16 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-daterangepicker/daterangepicker.css';
 
 var baseDate = "07/01/2022";
+const searchParams = new URLSearchParams(window.location.search);
 
-export class SearchingForm extends Component {
+
+export class CheckOfferForDestination extends Component {
+
 
     state = {
-        showOffers: false,
+        showOffers: true,
         searchingParam: {
-            when: baseDate+"-"+baseDate,
+            when: baseDate + "-" + baseDate,
             departure: "Warszawa",
             destination: "gdziekolwiek",
             adults: "1",
@@ -32,8 +35,15 @@ export class SearchingForm extends Component {
         }
     }
 
+    componentDidMount() {
+        this.setState({ searchingParam: { ...this.state.searchingParam, destination: searchParams.get("destination") } });
+
+        console.log(this.state.searchingParam.destination);
+        console.log(searchParams.get("destination"));
+    }
+
     handleSubmit = (data) => {
-       
+
         this.setState({
             searchingParam: {
                 ...this.state.searchingParam,
@@ -49,6 +59,8 @@ export class SearchingForm extends Component {
     };
 
     render() {
+        console.log(this.state.searchingParam.destination);
+        console.log(searchParams.get("destination"));
 
         return (
             <div>
@@ -58,12 +70,12 @@ export class SearchingForm extends Component {
                         initialValues={{
                             when: "07/01/2022 - 07/01/2022",
                             departure: "Warszawa",
-                            destination: "gdziekolwiek",
+                            destination: searchParams.get("destination"),
                             adults: "1",
                             children_under_3: "0",
                             children_under_10: "0",
                             children_under_18: "0"
-                            
+
                         }}
                         render={(formRenderProps) => (
                             <form onSubmit={formRenderProps.onSubmit}>
@@ -122,14 +134,14 @@ export class SearchingForm extends Component {
                                 </p>
 
                                 <input type="submit" value="Szukaj" onClick={() => { this.setState({ showOffers: true }); }} />
-                               
+
 
                             </form>
                         )}>
                     </Form>
                 </div>
                 <div>
-                    
+
                     {this.state.showOffers ? <Offer param={this.state.searchingParam} /> : null}
                     {this.state.showOffers ? () => this.setState({ showOffers: false }) : null}
 

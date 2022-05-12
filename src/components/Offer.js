@@ -1,14 +1,9 @@
 ﻿import React, { Component } from 'react';
-import { Form, Field } from "@progress/kendo-react-form";
-import transport from "./transport";
-import checkbox from "./checkbox";
 const webAPI_URL = "http://localhost:8090";
 const offersROUTE = "/Offers/GetOffers";
 
 import axios from 'axios';
 
-var currentDate = new Date(); //use your date here
-currentDate = currentDate.toLocaleDateString('en-US'); // "en-US" gives date in US Format - mm/dd/yy
 var baseDate = "07/01/2022";
 
 const equals = (a, b) => JSON.stringify(a) === JSON.stringify(b);
@@ -109,7 +104,7 @@ export class Offer extends React.Component {
        
     }
 
-    handleClick = offer => () => {
+      handleClick = offer => () => {
 
         const date = this.state.when;
         const dates = date.split("-");
@@ -118,9 +113,16 @@ export class Offer extends React.Component {
         var end = dates[1].replaceAll("/", "-");
         end = end.replaceAll(" ", "");
 
+        var id = "";
+          if (offer.offerId === undefined) {
+              id = "defaultId";
+          } else {
+              id = offer.offerId;
+          }
+
 
         const parameters = {
-            offerId: offer.offerId,
+            offerId: id, 
             hotelName: offer.hotelName,
             startDate: start,
             endDate: end,

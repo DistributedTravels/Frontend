@@ -27,9 +27,22 @@ label {
     border-radius: 3px;
     border-width: 1px;
 }
-
-.log {
-
+.reserve {
     border-radius: 3px;
     border-width: 1px;
+}
+.Disabled {
+    border-radius: 3px;
+    border-width: 1px;
+    pointer-events: none;
+    cursor: not-allowed;
+    opacity: 0.65;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.log {
+
+border-radius: 3px;
+border-width: 1px;
 }

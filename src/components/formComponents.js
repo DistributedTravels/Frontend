@@ -5,8 +5,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-daterangepicker/daterangepicker.css';
 
 const handleDateCancel = (event, picker) => {
-    picker.setStartDate(new Date())
-    picker.setEndDate(new Date())
+    //picker.setStartDate(new Date("07/01/2022"))
+    //picker.setEndDate(new Date("07/01/2022"))
 }
 
 export const DateInput = (fieldProps) => {
