@@ -17,6 +17,8 @@ export class Reservation extends Component {
     state = {
         offerId: "",
         hotelName: "",
+        hotelId: "",
+        transportId: "",
         startDate: "",
         endDate: "",
         departure: "",
@@ -32,7 +34,8 @@ export class Reservation extends Component {
         wifi: "",
         offerAvailable : true,
         price: "niedostępna",
-        promotionCode: "brak kodu rabatowego"
+        promotionCode: "brak kodu rabatowego",
+        showCode: false
 
     }
 
@@ -40,6 +43,8 @@ export class Reservation extends Component {
         this.setState({
             offerId: searchParams.get("offerId"),
             hotelName: searchParams.get("hotelName"),
+            hotelId: searchParams.get("hotelId"),
+            transportId: searchParams.get("transportId"),
             startDate: searchParams.get("startDate"),
             endDate: searchParams.get("endDate"),
             departure: searchParams.get("departure"),
@@ -58,12 +63,14 @@ export class Reservation extends Component {
 
         const myUrlWithParams = new URL(webAPI_URL + offersAvailableROUTE);
 
-        myUrlWithParams.searchParams.append("offerId", searchParams.get("offerId"));
-        myUrlWithParams.searchParams.append("hotelName", searchParams.get("hotelName"));
+        //myUrlWithParams.searchParams.append("offerId", searchParams.get("offerId"));
+        //myUrlWithParams.searchParams.append("hotelName", searchParams.get("hotelName"));
+        myUrlWithParams.searchParams.append("hotelId", searchParams.get("hotelId"));
+        myUrlWithParams.searchParams.append("transportId", searchParams.get("transportId"));
         myUrlWithParams.searchParams.append("startDate", searchParams.get("startDate"));
         myUrlWithParams.searchParams.append("endDate", searchParams.get("endDate"));
-        myUrlWithParams.searchParams.append("departure", searchParams.get("departure"));
-        myUrlWithParams.searchParams.append("destination", searchParams.get("destination"));
+        //myUrlWithParams.searchParams.append("departure", searchParams.get("departure"));
+        //myUrlWithParams.searchParams.append("destination", searchParams.get("destination"));
         myUrlWithParams.searchParams.append("adults", searchParams.get("adults"));
         myUrlWithParams.searchParams.append("children_under_3", searchParams.get("children_under_3"));
         myUrlWithParams.searchParams.append("children_under_10", searchParams.get("children_under_10"));
@@ -94,22 +101,26 @@ export class Reservation extends Component {
 
     }
     handleSubmit = (data) => {
-        if (data.promotionCode === undefined) {
+        if (data.promotionCode === undefined || data.promotionCode === "" ) {
             data.promotionCode = "brak kodu rabatowego";
         }
 
         this.setState({
-            promotionCode: data.promotionCode
+            promotionCode: data.promotionCode,
+            showCode: true
         });
 
-        console.log(this.state.promotionCode);
+       
     };
-    
+
+
     handleClick = () => {
 
         const parameters = {
             offerId: this.state.offerId,
             hotelName: this.state.hotelName,
+            hotelId: this.state.hotelId,
+            transportId: this.state.transportId,
             startDate: this.state.startDate,
             endDate: this.state.endDate,
             departure: this.state.departure,
@@ -137,6 +148,8 @@ export class Reservation extends Component {
             body: JSON.stringify({
                 offerId: this.state.offerId,
                 hotelName: this.state.hotelName,
+                hotelId: this.state.hotelId,
+                transportId: this.state.transportId,
                 startDate: this.state.startDate,
                 endDate: this.state.endDate,
                 departure: this.state.departure,
@@ -155,23 +168,9 @@ export class Reservation extends Component {
             })
         };
            
-        fetch(webAPI_URL + reserveROUTE, requestOptions).then(async response => {
-            const isJson = response.headers.get('content-type')?.includes('application/json');
+        fetch(webAPI_URL + reserveROUTE, requestOptions);
 
-            // check for error response
-            if (!response.ok) {
-                // get error message from body or default to response status
-
-                // !!!!!!!!!!uncoment this
-                //const error = (data && data.message) || response.status;
-                //return Promise.reject(error);
-            }
-
-            window.location.href = "/payment?" + myUrlWithParams;
-        })
-            .catch(error => {
-                window.location.href = "/error";
-            });
+        window.location.href = "/reservationError?" + myUrlWithParams;
         
     };
 
@@ -231,7 +230,7 @@ export class Reservation extends Component {
                                             name={"promotionCode"}
                                             component={Input}
                                             pattern={"[a-z]+"}
-                                            minLength={4}
+                                            minLength={3}
                                             maxLength={4}
                                         />
                                     </div>
@@ -245,6 +244,13 @@ export class Reservation extends Component {
                                         className="reserve">
                                         Wykorzystaj kod
                                     </button>
+
+                                    <p>
+                                    </p>
+                                    <div>
+                                        {this.state.showCode ? <h5>Wykorzystany kod: {this.state.promotionCode} </h5> : null}
+                                        {this.state.showCode ? () => this.setState({ showCode: false}) : null}
+                                    </div>
                                 </div>
                             </FormElement>
                         )}
@@ -253,7 +259,7 @@ export class Reservation extends Component {
                 <p>
 
                 </p>
-                <div>
+                <div className="border list-group-item mt-1 offer h5">
                     {information}
                     <p>
 

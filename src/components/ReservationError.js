@@ -1,11 +1,13 @@
 ﻿import React, { Component } from 'react';
-const webAPI_URL = "http://localhost:8090";
-const paymentROUTE = "/Offers/GetPaymentStatus";
 import axios from 'axios';
+const webAPI_URL = "http://localhost:8090";
+const offersROUTE = "/Offers/GetReservationStatus";
 
 const searchParams = new URLSearchParams(window.location.search);
 
-export class PaymentInformation extends React.Component {
+export class ReservationError extends Component
+{
+
 
     constructor(props) {
         super(props);
@@ -31,14 +33,14 @@ export class PaymentInformation extends React.Component {
         wifi: "",
         price: "",
         promotionCode: "",
-        paymentSucceeded: false
+        reservationOK: true
 
     }
 
     componentDidMount() {
         console.log(searchParams);
 
-        const parameters = {
+        const parameters ={
             offerId: searchParams.get("offerId"),
             hotelName: searchParams.get("hotelName"),
             hotelId: searchParams.get("hotelId"),
@@ -60,37 +62,44 @@ export class PaymentInformation extends React.Component {
             promotionCode: searchParams.get("promotionCode")
         }
 
+        
+        console.log(parameters);
 
-        //GET if payment OK
+        const myRedirectUrlWithParams = new URLSearchParams(parameters);
 
-        const myUrlWithParams = new URL(webAPI_URL + paymentROUTE);
+        //GET if reservation OK
+
+        const myUrlWithParams = new URL(webAPI_URL + offersROUTE);
 
         // tu dodawać
         //myUrlWithParams.searchParams.append("startDate", start);
-
+       
 
         //axios.get(myUrlWithParams.href)
         //    .then(res => {
-        //        this.setState({ paymentSucceeded: res.data });
-       
+        //        this.setState({ reservationOK: res.data });
+        // // tu może być if reservationOK then przekiwrowanie chyba
         //    })
 
+        if (this.state.reservationOK) {
+            window.location.href = "/payment?" + myRedirectUrlWithParams;
+        }
 
+        
     }
 
     render() {
-        let information;
-        if (this.state.paymentSucceeded) {
-            information = <h5 style={{ color: 'green' }}> Płatność przezła pomyślnie. Oferta zarezerwowana. </h5>
-        } else {
-            information = <h5 style={{ color: 'red' }}> Płatność nie przeszła pomyślnie. Oferta niezarezerwowana. </h5>
-        }
+
 
         return (
-
-            <div className="border list-group-item mt-1 offer h5">
-                {information}
-            </div>
-        )
+            < div className="border list-group-item mt-1 offer h5">
+                {this.state.reservationOK ?
+                    null :
+                    <h5 style={{ color: 'red' }}> Błąd rezerwacji. Oferta już niedostępna </h5>
+                }
+                
+               </ div >
+        );
     }
 }
+

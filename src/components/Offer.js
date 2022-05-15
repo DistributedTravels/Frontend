@@ -1,4 +1,6 @@
 ﻿import React, { Component } from 'react';
+import { Form, Field, FormElement } from "@progress/kendo-react-form";
+import { Input } from "@progress/kendo-react-inputs";
 const webAPI_URL = "http://localhost:8090";
 const offersROUTE = "/Offers/GetOffers";
 
@@ -22,6 +24,7 @@ export class Offer extends React.Component {
             children_under_18: "0",
             previousOffers: [1,2],
             offers: [1, 4],
+            mockOffers: [1, 4],
             offerId: "0",
             hotelName: "defaultHotel"
             
@@ -37,9 +40,6 @@ export class Offer extends React.Component {
         this.setState({ children_under_10: nextProps.param.children_under_10 })
         this.setState({ children_under_18: nextProps.param.children_under_18 })
 
-        //const num = Number(this.state.adults);
-        //const num2 = Number(this.state.children_under_18);
-        //this.sum = num + num2;
     }
 
     componentDidMount() {
@@ -47,8 +47,12 @@ export class Offer extends React.Component {
 
         const date = this.state.when;
         const dates = date.split("-");
-        const start = dates[0].replaceAll("/", "-");
-        const end = dates[1].replaceAll("/", "-");
+        
+
+        var start = dates[0].replaceAll("/", "-");
+        start = start.replaceAll(" ", "");
+        var end = dates[1].replaceAll("/", "-");
+        end = end.replaceAll(" ", "");
 
         myUrlWithParams.searchParams.append("startDate", start);
         myUrlWithParams.searchParams.append("endDate", end);
@@ -66,22 +70,17 @@ export class Offer extends React.Component {
                 this.setState({ offers: res.data });
 
             })
-
-        //axios.get(`http://localhost:8090/offers/getoffers`)
-        //    .then(res => {
-
-        //        this.setstate({ previousoffers: this.state.offers });
-        //        this.setstate({ offers: res.data });
-
-        //    })   
+        console.log(myUrlWithParams.href);
 
     }
     componentDidUpdate() {
         const myUrlWithParams = new URL(webAPI_URL + offersROUTE );
         const date = this.state.when;
         const dates = date.split("-");
-        const start = dates[0].replaceAll("/", "-");
-        const end = dates[1].replaceAll("/", "-");
+        var start = dates[0].replaceAll("/", "-");
+        start = start.replaceAll(" ", "");
+        var end = dates[1].replaceAll("/", "-");
+        end = end.replaceAll(" ", "");
 
         myUrlWithParams.searchParams.append("startDate", start);
         myUrlWithParams.searchParams.append("endDate", end);
@@ -92,12 +91,15 @@ export class Offer extends React.Component {
         myUrlWithParams.searchParams.append("children_under_10", this.state.children_under_10);
         myUrlWithParams.searchParams.append("children_under_18", this.state.children_under_18);
 
-        if (!equals(this.state.offers, this.state.previousOffers)) {
+
+        if (!equals(this.state.offers, this.state.previousOffers) ) {
             axios.get(myUrlWithParams.href)
                 .then(res => {
-
-                    this.setState({ previousOffers: this.state.offers });
-                    this.setState({ offers: res.data });
+                    if (!equals(this.state.offers, res.data)) {
+                        this.setState({ previousOffers: this.state.offers });
+                        this.setState({ offers: res.data });
+                    }
+                   
 
                 })
         }
@@ -122,8 +124,10 @@ export class Offer extends React.Component {
 
 
         const parameters = {
-            offerId: id, 
+            offerId: id,
+            hotelId: offer.hotelId,
             hotelName: offer.hotelName,
+            transportId: offer.transportId,
             startDate: start,
             endDate: end,
             departure: this.state.departure,
@@ -141,28 +145,46 @@ export class Offer extends React.Component {
     };
 
     render() {
- 
-        return (
+        if (!equals(this.state.offers, this.state.mockOffers)) {
 
-            <div className="border list-group-item mt-1 offer h5">
-                <h3 className="text-center mt-5">Wyniki wyszukiwania</h3>
-              
-                <ul>
-                    {
-                        this.state.offers
-                            .map(offer =>
-                            
-                                <li key={offer.id} className="border list-group-item mt-5 offer">
-                                    <h4>{offer.hotelName}</h4>
-                                    <h5>{offer.destination}</h5>
-                                    <button className="search" onClick={this.handleClick(offer)}>Sprawdź ofertę</button> 
-                                   
-                                </li>
-                            )
-                    }
-                </ul>
 
-            </div>
-        )
+            return (
+                <div className="border list-group-item mt-1 offer h5">
+                    <h3 className="text-center mt-5">Wyniki wyszukiwania</h3>
+
+                    <ul>
+                        {
+                            this.state.offers
+                                .map(offer => {
+                                    const dates = (offer.departureTime).split("T");
+                                    var date = dates[0];
+                                    var time = dates[1].replaceAll("Z", "");
+
+                                    return (
+
+                                        <li key={offer.id} className="border list-group-item mt-5 offer">
+                                            <h4>{offer.hotelName}</h4>
+                                            <h5>{offer.destination}</h5>
+                                            <h5>Data: {date}</h5>
+                                            <h5>Czas wyjazdu: {time}</h5>
+                                            <button className="search" onClick={this.handleClick(offer)}>Sprawdź ofertę</button>
+
+                                        </li>
+                                )})
+                        }
+                    </ul>
+
+                </div>
+
+            )
+        }
+        else {
+            return (
+                <div className="border list-group-item mt-1 offer h5">
+                    <h3 className="text-center mt-5">Wyniki wyszukiwania</h3>
+                    <h4 className="text-center mt-5">Brak ofert przy wybranych filtrach</h4>
+                </div>
+                )
+        }
     }
 }

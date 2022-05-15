@@ -3,7 +3,6 @@ const webAPI_URL = "http://localhost:8090";
 const paymentROUTE = "/Offers/Pay";
 import { Form, Field, FormElement } from "@progress/kendo-react-form";
 import { Input } from "@progress/kendo-react-inputs";
-import { PaymentInformation } from './PaymentInformation';
 
 const searchParams = new URLSearchParams(window.location.search);
 
@@ -17,6 +16,8 @@ export class Payment extends Component {
     state = {
         offerId: "",
         hotelName: "",
+        hotelId: "",
+        transportId: "",
         startDate: "",
         endDate: "",
         departure: "",
@@ -34,8 +35,8 @@ export class Payment extends Component {
         promotionPrice: "brak zniżki",
         promotionCode: "brak kodu rabatowego",
         cardNumber: "",
-        paymentSucceeded: false,
-        showInformation: false
+        paymentSucceeded: false
+        
     }
 
     componentDidMount() {
@@ -45,6 +46,8 @@ export class Payment extends Component {
         this.setState({
             offerId: searchParams.get("offerId"),
             hotelName: searchParams.get("hotelName"),
+            hotelId: searchParams.get("hotelId"),
+            transportId: searchParams.get("transportId"),
             startDate: searchParams.get("startDate"),
             endDate: searchParams.get("endDate"),
             departure: searchParams.get("departure"),
@@ -67,15 +70,39 @@ export class Payment extends Component {
     handleSubmit = (data) => {
 
         this.setState({
-            cardNumber: data.cardNumber,
-            showInformation: true
+            cardNumber: data.cardNumber
         });
 
         //POST  with payment
 
-        //setstate paymentSucceeded
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                offerId: this.state.offerId,
+                hotelName: this.state.hotelName,
+                hotelId: this.state.hotelId,
+                transportId: this.state.transportId,
+                startDate: this.state.startDate,
+                endDate: this.state.endDate,
+                departure: this.state.departure,
+                destination: this.state.destination,
+                adults: this.state.adults,
+                children_under_3: this.state.children_under_3,
+                children_under_10: this.state.children_under_10,
+                children_under_18: this.state.children_under_18,
+                number_of_2_room: this.state.number_of_2_room,
+                number_of_apartaments: this.state.number_of_apartaments,
+                transport: this.state.transport,
+                breakfast: this.state.breakfast,
+                wifi: this.state.wifi,
+                price: this.state.price,
+                promotionCode: this.state.promotionCode
 
-        console.log(this.state.cardNumber);
+            })
+        };
+
+        fetch(webAPI_URL + paymentROUTE, requestOptions);
 
         if (data.cardNumber === undefined) {
             data.cardNumber = "";
@@ -84,6 +111,8 @@ export class Payment extends Component {
         const parameters = {
             offerId: this.state.offerId,
             hotelName: this.state.hotelName,
+            hotelId: this.state.hotelId,
+            transportId: this.state.transportId,
             startDate: this.state.startDate,
             endDate: this.state.endDate,
             departure: this.state.departure,
@@ -98,17 +127,17 @@ export class Payment extends Component {
             breakfast: this.state.breakfast,
             wifi: this.state.wifi,
             price: this.state.price,
-            promotionCode: this.state.promotionCode,
-            cardNumber: data.cardNumber
+            promotionCode: this.state.promotionCode
         }
         const myUrlWithParams = new URLSearchParams(parameters);
-        console.log(parameters);
+        window.location.href = "/paymentInformation?" + myUrlWithParams;
 
+        
     };
 
     render() {
         const validationMessage = "Wprowadź tylko liczby";
-        
+
         return (
             <div className="border list-group-item mt-1 offer h5">
                 <h1>Zapłać</h1>
@@ -134,12 +163,12 @@ export class Payment extends Component {
                             <FormElement>
                                 <fieldset>
                                     <div>
-                                        <Field
+                                        <Input
                                             name={"cardNumber"}
-                                            component={Input}
                                             pattern={"[0-9]+"}
                                             minLength={12}
                                             maxLength={12}
+                                            required={true}
                                         />
                                     </div>
                                 </fieldset>
@@ -150,7 +179,7 @@ export class Payment extends Component {
                                     <button
                                         type={"submit"}
                                         className="reserve"
-                                        disabled={!formRenderProps.allowSubmit}
+                                        
                                         onClick={this.handleSubmit}>
                                         Zapłać
                                     </button>
@@ -158,11 +187,8 @@ export class Payment extends Component {
                             </FormElement>
                         )}
                     />
-                </div>
-                <div>
-                    {this.state.showInformation ? <PaymentInformation param={this.state} /> : null}
-                </div>
 
+                </div>
             </div>
         );
     }

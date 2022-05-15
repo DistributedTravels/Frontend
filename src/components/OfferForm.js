@@ -25,7 +25,9 @@ export class OfferForm extends Component {
         children_under_10: "",
         children_under_18: "",
         offerId: "",
-        hotelName: ""
+        hotelName: "",
+        hotelId: "",
+        transportId: ""
 
     }
 
@@ -40,7 +42,9 @@ export class OfferForm extends Component {
             children_under_10: searchParams.get("children_under_10"),
             children_under_18: searchParams.get("children_under_18"),
             offerId: searchParams.get("offerId"),
-            hotelName: searchParams.get("hotelName")
+            hotelName: searchParams.get("hotelName"),
+            hotelId: searchParams.get("hotelId"),
+            transportId: searchParams.get("transportId")
         });
     }
     
@@ -68,6 +72,8 @@ export class OfferForm extends Component {
         const parameters = {
             offerId: this.state.offerId,
             hotelName: this.state.hotelName,
+            hotelId: this.state.hotelId,
+            transportId: this.state.transportId,
             startDate: this.state.startDate,
             endDate: this.state.endDate,
             departure: this.state.departure,
