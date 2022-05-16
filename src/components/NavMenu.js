@@ -1,55 +1,48 @@
-﻿import React, { Component } from 'react';
-import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from 'reactstrap';
-import { Link } from 'react-router-dom';
+﻿import React, { Component} from 'react';
+import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink, Dropdown, DropdownToggle, DropdownMenu,DropdownItem } from 'reactstrap';
+import { Link} from 'react-router-dom';
 import './NavMenu.css';
 
-var user = null;
-var isLogged = null;
+
 
 export class NavMenu extends Component {
-  static displayName = NavMenu.name;
+    static displayName = NavMenu.name;
+    
 
   constructor (props) {
-    super(props);
+      super(props);
+
+      this.toggle = this.toggle.bind(this);
+      this.state = {
+          dropdownOpen: false,
+      };
+      
 
     this.toggleNavbar = this.toggleNavbar.bind(this);
     this.state = {
         collapsed: true
     };
-  }
-
-  toggleNavbar () {
-    this.setState({
-      collapsed: !this.state.collapsed
-    });
     }
 
-    componentDidMount() {
-        const userSS = sessionStorage.getItem('user-key');
-        
-        if (!(userSS === null)) {
-
-            this.isLogged = true;
-            this.user = userSS;
-        }
-        else {
-            this.isLogged = false;
-            this.user = null;
-        }
+    toggle() {
+        this.setState(prevState => ({
+            dropdownOpen: !prevState.dropdownOpen
+          
+        }));
     }
-    componentDidUpdate() {
-        const userSS = sessionStorage.getItem('user-key');
 
-        if (!(userSS === null)) {
-
-            this.isLogged = true;
-            this.user = userSS;
-        }
-        else {
-            this.isLogged = false;
-            this.user = null;
-        }
+    toggleNavbar() {
+        this.setState({
+            collapsed: !this.state.collapsed
+        });
     }
+
+    logout() {
+       
+        sessionStorage.clear();
+        window.location.href = "/login"
+}
+
 
   render () {
     return (
@@ -67,14 +60,22 @@ export class NavMenu extends Component {
                     <NavLink tag={Link} className="text-dark" to="/destinations">Kierunki podróży</NavLink>
                 </NavItem>
 
-                {this.isLogged ?
-                    <NavItem>
-                        <NavLink tag={Link} className="text-dark" to="/logout">Wyloguj</NavLink>
-                    </NavItem> :
+                {sessionStorage.getItem('user-key') ?
+                    <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
+                        <DropdownToggle caret>
+                                        {sessionStorage.getItem('user-key')}
+                        </DropdownToggle>
+                        <DropdownMenu>
+
+                            <DropdownItem onClick={this.logout}>Wyloguj</DropdownItem>
+
+                        </DropdownMenu>
+                    </Dropdown>:
                     <NavItem>
                         <NavLink tag={Link} className="text-dark" to="/login">Zaloguj</NavLink>
                     </NavItem>
-                 }
+                }
+                            
                 
               </ul>
             </Collapse>
