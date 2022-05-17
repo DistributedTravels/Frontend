@@ -1,9 +1,12 @@
 ﻿import React, { Component } from 'react';
 import { Form, Field, FormElement } from "@progress/kendo-react-form";
 import { Input } from "@progress/kendo-react-inputs";
+
+import axios from 'axios';
+
 const webAPI_URL = "http://localhost:8090";
-const offersAvailableROUTE = "/Offers/CheckIfAvailable";
-const reserveROUTE = "/Offers/Reserve";
+const offersAvailableROUTE = "/Offers/CheckOfferAvailability";
+const reserveROUTE = "/Reservation/Reserve";
 
 const searchParams = new URLSearchParams(window.location.search);
 
@@ -35,7 +38,8 @@ export class Reservation extends Component {
         offerAvailable : true,
         price: "niedostępna",
         promotionCode: "brak kodu rabatowego",
-        showCode: false
+        showCode: false,
+        postId: ""
 
     }
 
@@ -81,23 +85,18 @@ export class Reservation extends Component {
         myUrlWithParams.searchParams.append("breakfast", searchParams.get("breakfast"));
         myUrlWithParams.searchParams.append("wifi", searchParams.get("wifi"));
 
-        //GET if offer is available 
-        // !!!!!!!! uncomment if API is ready
+        //GET if offer is available and price
+        
 
-        //axios.get(myUrlWithParams.href)
-        //    .then(res => {
-        //        this.setState({ offerAvailable: res.data });
+        axios.get(myUrlWithParams.href)
+            .then(res => {
+                this.setState({
+                    offerAvailable: res.data.answer,
+                    price: res.data.price
+                });
 
-        //    })
+            })
 
-        //GET price
-        // !!!!!!!! uncomment if API is ready
-
-        //axios.get(myUrlWithParams.href)
-        //    .then(res => {
-        //        this.setState({ price: res.data });
-
-        //    })
 
     }
     handleSubmit = (data) => {
@@ -114,7 +113,42 @@ export class Reservation extends Component {
     };
 
 
-    handleClick = () => {
+    handleClick = async () => {
+
+        //POST  z rezerwacją
+
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                //offerId: this.state.offerId,
+                //hotelName: this.state.hotelName,
+                hotelId: this.state.hotelId,
+                transportId: this.state.transportId,
+                startDate: this.state.startDate,
+                endDate: this.state.endDate,
+                departure: this.state.departure,
+                destination: this.state.destination,
+                adults: this.state.adults,
+                children_under_3: this.state.children_under_3,
+                children_under_10: this.state.children_under_10,
+                children_under_18: this.state.children_under_18,
+                number_of_2_room: this.state.number_of_2_room,
+                number_of_apartaments: this.state.number_of_apartaments,
+                transport: this.state.transport,
+                breakfast: this.state.breakfast,
+                wifi: this.state.wifi
+                //promotionCode: this.state.promotionCode
+
+            })
+        };
+
+        var id;
+           
+        const response = await fetch(webAPI_URL + reserveROUTE, requestOptions)
+        const data = await response.json();
+        this.setState({ postId: data.id });
+        id = data.id;
 
         const parameters = {
             offerId: this.state.offerId,
@@ -135,40 +169,11 @@ export class Reservation extends Component {
             breakfast: this.state.breakfast,
             wifi: this.state.wifi,
             price: this.state.price,
-            promotionCode: this.state.promotionCode
+            promotionCode: this.state.promotionCode,
+            postId: id
         }
         const myUrlWithParams = new URLSearchParams(parameters);
         console.log(parameters);
-
-        //POST  z rezerwacją
-
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                offerId: this.state.offerId,
-                hotelName: this.state.hotelName,
-                hotelId: this.state.hotelId,
-                transportId: this.state.transportId,
-                startDate: this.state.startDate,
-                endDate: this.state.endDate,
-                departure: this.state.departure,
-                destination: this.state.destination,
-                adults: this.state.adults,
-                children_under_3: this.state.children_under_3,
-                children_under_10: this.state.children_under_10,
-                children_under_18: this.state.children_under_18,
-                number_of_2_room: this.state.number_of_2_room,
-                number_of_apartaments: this.state.number_of_apartaments,
-                transport: this.state.transport,
-                breakfast: this.state.breakfast,
-                wifi: this.state.wifi,
-                promotionCode: this.state.promotionCode
-
-            })
-        };
-           
-        fetch(webAPI_URL + reserveROUTE, requestOptions);
 
         window.location.href = "/reservationError?" + myUrlWithParams;
         
@@ -196,7 +201,7 @@ export class Reservation extends Component {
                     <h5>Liczba dzieci w wieku do 3 lat: {this.state.children_under_3}</h5>
                     <h5>Liczba dzieci w wieku do 10 lat: {this.state.children_under_10}</h5>
                     <h5>Liczba dzieci w wieku do 18 lat: {this.state.children_under_18}</h5>
-                    <h5>Numer oferty: {this.state.offerId}</h5>
+                   
                     <h5>Nazwa hotelu: {this.state.hotelName}</h5>
                     <p>
 

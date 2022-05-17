@@ -20,11 +20,8 @@ export class Offer extends React.Component {
             children_under_3: "0",
             children_under_10: "0",
             children_under_18: "0",
-            //previousOffers: [1,2],
             offers: []
-            //mockOffers: [1, 4],
-            //offerId: "0",
-            //hotelName: "defaultHotel"
+           
             
         };
     }
@@ -41,69 +38,6 @@ export class Offer extends React.Component {
 
     }
 
-    //componentDidMount() {
-    //    const myUrlWithParams = new URL(webAPI_URL + offersROUTE);
-
-    //    const date = this.state.when;
-    //    const dates = date.split("-");
-        
-
-    //    var start = dates[0].replaceAll("/", "-");
-    //    start = start.replaceAll(" ", "");
-    //    var end = dates[1].replaceAll("/", "-");
-    //    end = end.replaceAll(" ", "");
-
-    //    myUrlWithParams.searchParams.append("startDate", start);
-    //    myUrlWithParams.searchParams.append("endDate", end);
-    //    myUrlWithParams.searchParams.append("departure",  this.state.departure );
-    //    myUrlWithParams.searchParams.append("destination", this.state.destination);
-    //    myUrlWithParams.searchParams.append("adults", this.state.adults);
-    //    myUrlWithParams.searchParams.append("children_under_3", this.state.children_under_3);
-    //    myUrlWithParams.searchParams.append("children_under_10", this.state.children_under_10);
-    //    myUrlWithParams.searchParams.append("children_under_18", this.state.children_under_18);
-
-    //    axios.get(myUrlWithParams.href)
-    //        .then(res => {
-
-    //            this.setState({ previousoffers: this.state.offers });
-    //            this.setState({ offers: res.data });
-
-    //        })
-    //    console.log(myUrlWithParams.href);
-
-    //}
-    //componentDidUpdate() {
-    //    const myUrlWithParams = new URL(webAPI_URL + offersROUTE );
-    //    const date = this.state.when;
-    //    const dates = date.split("-");
-    //    var start = dates[0].replaceAll("/", "-");
-    //    start = start.replaceAll(" ", "");
-    //    var end = dates[1].replaceAll("/", "-");
-    //    end = end.replaceAll(" ", "");
-
-    //    myUrlWithParams.searchParams.append("startDate", start);
-    //    myUrlWithParams.searchParams.append("endDate", end);
-    //    myUrlWithParams.searchParams.append("departure", this.state.departure);
-    //    myUrlWithParams.searchParams.append("destination", this.state.destination);
-    //    myUrlWithParams.searchParams.append("adults", this.state.adults);
-    //    myUrlWithParams.searchParams.append("children_under_3", this.state.children_under_3);
-    //    myUrlWithParams.searchParams.append("children_under_10", this.state.children_under_10);
-    //    myUrlWithParams.searchParams.append("children_under_18", this.state.children_under_18);
-
-
-    //    if (!equals(this.state.offers, this.state.previousOffers) ) {
-    //        axios.get(myUrlWithParams.href)
-    //            .then(res => {
-    //                if (!equals(this.state.offers, res.data)) {
-    //                    this.setState({ previousOffers: this.state.offers });
-    //                    this.setState({ offers: res.data });
-    //                }
-                   
-
-    //            })
-    //    }
-       
-    //}
 
       handleClick = offer => () => {
 

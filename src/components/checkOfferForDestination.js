@@ -15,6 +15,11 @@ import 'bootstrap/dist/css/bootstrap.css';
 // you will also need the css that comes with bootstrap-daterangepicker
 import 'bootstrap-daterangepicker/daterangepicker.css';
 
+import axios from 'axios';
+
+const webAPI_URL = "http://localhost:8090";
+const offersROUTE = "/Offers/GetOffers";
+
 var baseDate = "07/01/2022";
 const searchParams = new URLSearchParams(window.location.search);
 
@@ -26,12 +31,13 @@ export class CheckOfferForDestination extends Component {
         showOffers: true,
         searchingParam: {
             when: baseDate + "-" + baseDate,
-            departure: "Warszawa",
+            departure: "gdziekolwiek",
             destination: "gdziekolwiek",
             adults: "1",
             children_under_3: "0",
             children_under_10: "0",
-            children_under_18: "0"
+            children_under_18: "0",
+            offers: []
         }
     }
 
@@ -40,6 +46,39 @@ export class CheckOfferForDestination extends Component {
 
         console.log(this.state.searchingParam.destination);
         console.log(searchParams.get("destination"));
+
+
+        const myUrlWithParams = new URL(webAPI_URL + offersROUTE);
+
+        const date = this.state.searchingParam.when;
+        const dates = date.split("-");
+
+
+        var start = dates[0].replaceAll("/", "-");
+        start = start.replaceAll(" ", "");
+        var end = dates[1].replaceAll("/", "-");
+        end = end.replaceAll(" ", "");
+
+        myUrlWithParams.searchParams.append("startDate", start);
+        myUrlWithParams.searchParams.append("endDate", end);
+        myUrlWithParams.searchParams.append("departure", this.state.searchingParam.departure);
+        myUrlWithParams.searchParams.append("destination", searchParams.get("destination"));
+        myUrlWithParams.searchParams.append("adults", this.state.searchingParam.adults);
+        myUrlWithParams.searchParams.append("children_under_3", this.state.searchingParam.children_under_3);
+        myUrlWithParams.searchParams.append("children_under_10", this.state.searchingParam.children_under_10);
+        myUrlWithParams.searchParams.append("children_under_18", this.state.searchingParam.children_under_18);
+
+        axios.get(myUrlWithParams.href)
+            .then(res => {
+                this.setState({
+                    searchingParam: {
+                        ...this.state.searchingParam,
+                        offers: res.data
+
+                    }
+                });
+
+            })
     }
 
     handleSubmit = (data) => {
@@ -56,6 +95,38 @@ export class CheckOfferForDestination extends Component {
                 children_under_18: data.children_under_18
             }
         });
+
+        const myUrlWithParams = new URL(webAPI_URL + offersROUTE);
+
+        const date = data.when;
+        const dates = date.split("-");
+
+
+        var start = dates[0].replaceAll("/", "-");
+        start = start.replaceAll(" ", "");
+        var end = dates[1].replaceAll("/", "-");
+        end = end.replaceAll(" ", "");
+
+        myUrlWithParams.searchParams.append("startDate", start);
+        myUrlWithParams.searchParams.append("endDate", end);
+        myUrlWithParams.searchParams.append("departure", data.departure);
+        myUrlWithParams.searchParams.append("destination", data.destination);
+        myUrlWithParams.searchParams.append("adults", data.adults);
+        myUrlWithParams.searchParams.append("children_under_3", data.children_under_3);
+        myUrlWithParams.searchParams.append("children_under_10", data.children_under_10);
+        myUrlWithParams.searchParams.append("children_under_18", data.children_under_18);
+
+        axios.get(myUrlWithParams.href)
+            .then(res => {
+                this.setState({
+                    searchingParam: {
+                        ...this.state.searchingParam,
+                        offers: res.data
+
+                    }
+                });
+
+            })
     };
 
     render() {
@@ -69,7 +140,7 @@ export class CheckOfferForDestination extends Component {
                         onSubmit={this.handleSubmit.bind(this)}
                         initialValues={{
                             when: "07/01/2022 - 07/01/2022",
-                            departure: "Warszawa",
+                            departure: "gdziekolwiek",
                             destination: searchParams.get("destination"),
                             adults: "1",
                             children_under_3: "0",
@@ -133,17 +204,18 @@ export class CheckOfferForDestination extends Component {
 
                                 </p>
 
-                                <input type="submit" value="Szukaj" onClick={() => { this.setState({ showOffers: true }); }} />
+                                <input type="submit" value="Szukaj" />
 
 
                             </form>
                         )}>
                     </Form>
                 </div>
-                <div>
+                <div className="border list-group-item mt-1 offer h5">
+                    <h3 className="text-center mt-5">Wyniki wyszukiwania</h3>
 
-                    {this.state.showOffers ? <Offer param={this.state.searchingParam} /> : null}
-                    {this.state.showOffers ? () => this.setState({ showOffers: false }) : null}
+                    {<Offer param={this.state.searchingParam} />}
+
 
                 </div>
             </div>

@@ -43,66 +43,29 @@ export class SearchingForm extends Component {
     }
 
 
-    //handleClick = () => {
-
-    //    const myUrlWithParams = new URL(webAPI_URL + offersROUTE);
-
-    //    const date = this.state.searchingParam.when;
-    //    const dates = date.split("-");
-
-
-    //    var start = dates[0].replaceAll("/", "-");
-    //    start = start.replaceAll(" ", "");
-    //    var end = dates[1].replaceAll("/", "-");
-    //    end = end.replaceAll(" ", "");
-
-    //    myUrlWithParams.searchParams.append("startDate", start);
-    //    myUrlWithParams.searchParams.append("endDate", end);
-    //    myUrlWithParams.searchParams.append("departure", this.state.searchingParam.departure);
-    //    myUrlWithParams.searchParams.append("destination", this.state.searchingParam.destination);
-    //    myUrlWithParams.searchParams.append("adults", this.state.searchingParam.adults);
-    //    myUrlWithParams.searchParams.append("children_under_3", this.state.searchingParam.children_under_3);
-    //    myUrlWithParams.searchParams.append("children_under_10", this.state.searchingParam.children_under_10);
-    //    myUrlWithParams.searchParams.append("children_under_18", this.state.searchingParam.children_under_18);
-
-    //    axios.get(myUrlWithParams.href)
-    //        .then(res => {
-    //            this.setState({
-    //                searchingParam: {
-    //                    ...this.state.searchingParam,
-    //                    offers: res.data
-
-    //                }
-    //            });
-
-    //        })
-
-
-    //};
-
     handleSubmit = (data) => {
 
-        if (data.when === undefined) {
-            data.when = baseDate + "-" + baseDate;
-        }
-        if (data.departure === undefined) {
-            data.departure = "Warszawa";
-        }
-        if (data.destination === undefined) {
-            data.destination = "gdziekolwiek";
-        }
-        if (data.adults === undefined) {
-            data.adults = "1";
-        }
-        if (data.children_under_3 === undefined) {
-            data.children_under_3 = "0";
-        }
-        if (data.children_under_10 === undefined) {
-            data.children_under_10 = "0";
-        }
-        if (data.children_under_18 === undefined) {
-            data.children_under_18 = "0";
-        }
+        //if (data.when === undefined) {
+        //    data.when = baseDate + "-" + baseDate;
+        //}
+        //if (data.departure === undefined) {
+        //    data.departure = "Warszawa";
+        //}
+        //if (data.destination === undefined) {
+        //    data.destination = "gdziekolwiek";
+        //}
+        //if (data.adults === undefined) {
+        //    data.adults = "1";
+        //}
+        //if (data.children_under_3 === undefined) {
+        //    data.children_under_3 = "0";
+        //}
+        //if (data.children_under_10 === undefined) {
+        //    data.children_under_10 = "0";
+        //}
+        //if (data.children_under_18 === undefined) {
+        //    data.children_under_18 = "0";
+        //}
        
         this.setState({
             searchingParam: {
