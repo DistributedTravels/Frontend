@@ -2,9 +2,7 @@
 import { Form, Field, FormElement } from "@progress/kendo-react-form";
 import { Input } from "@progress/kendo-react-inputs";
 const webAPI_URL = "http://localhost:8090";
-const offersROUTE = "/Offers/GetOffers";
 
-import axios from 'axios';
 
 var baseDate = "07/01/2022";
 
@@ -22,11 +20,11 @@ export class Offer extends React.Component {
             children_under_3: "0",
             children_under_10: "0",
             children_under_18: "0",
-            previousOffers: [1,2],
-            offers: [1, 4],
-            mockOffers: [1, 4],
-            offerId: "0",
-            hotelName: "defaultHotel"
+            //previousOffers: [1,2],
+            offers: []
+            //mockOffers: [1, 4],
+            //offerId: "0",
+            //hotelName: "defaultHotel"
             
         };
     }
@@ -39,72 +37,73 @@ export class Offer extends React.Component {
         this.setState({ children_under_3: nextProps.param.children_under_3 })
         this.setState({ children_under_10: nextProps.param.children_under_10 })
         this.setState({ children_under_18: nextProps.param.children_under_18 })
+        this.setState({ offers: nextProps.param.offers })
 
     }
 
-    componentDidMount() {
-        const myUrlWithParams = new URL(webAPI_URL + offersROUTE);
+    //componentDidMount() {
+    //    const myUrlWithParams = new URL(webAPI_URL + offersROUTE);
 
-        const date = this.state.when;
-        const dates = date.split("-");
+    //    const date = this.state.when;
+    //    const dates = date.split("-");
         
 
-        var start = dates[0].replaceAll("/", "-");
-        start = start.replaceAll(" ", "");
-        var end = dates[1].replaceAll("/", "-");
-        end = end.replaceAll(" ", "");
+    //    var start = dates[0].replaceAll("/", "-");
+    //    start = start.replaceAll(" ", "");
+    //    var end = dates[1].replaceAll("/", "-");
+    //    end = end.replaceAll(" ", "");
 
-        myUrlWithParams.searchParams.append("startDate", start);
-        myUrlWithParams.searchParams.append("endDate", end);
-        myUrlWithParams.searchParams.append("departure",  this.state.departure );
-        myUrlWithParams.searchParams.append("destination", this.state.destination);
-        myUrlWithParams.searchParams.append("adults", this.state.adults);
-        myUrlWithParams.searchParams.append("children_under_3", this.state.children_under_3);
-        myUrlWithParams.searchParams.append("children_under_10", this.state.children_under_10);
-        myUrlWithParams.searchParams.append("children_under_18", this.state.children_under_18);
+    //    myUrlWithParams.searchParams.append("startDate", start);
+    //    myUrlWithParams.searchParams.append("endDate", end);
+    //    myUrlWithParams.searchParams.append("departure",  this.state.departure );
+    //    myUrlWithParams.searchParams.append("destination", this.state.destination);
+    //    myUrlWithParams.searchParams.append("adults", this.state.adults);
+    //    myUrlWithParams.searchParams.append("children_under_3", this.state.children_under_3);
+    //    myUrlWithParams.searchParams.append("children_under_10", this.state.children_under_10);
+    //    myUrlWithParams.searchParams.append("children_under_18", this.state.children_under_18);
 
-        axios.get(myUrlWithParams.href)
-            .then(res => {
+    //    axios.get(myUrlWithParams.href)
+    //        .then(res => {
 
-                this.setState({ previousoffers: this.state.offers });
-                this.setState({ offers: res.data });
+    //            this.setState({ previousoffers: this.state.offers });
+    //            this.setState({ offers: res.data });
 
-            })
-        console.log(myUrlWithParams.href);
+    //        })
+    //    console.log(myUrlWithParams.href);
 
-    }
-    componentDidUpdate() {
-        const myUrlWithParams = new URL(webAPI_URL + offersROUTE );
-        const date = this.state.when;
-        const dates = date.split("-");
-        var start = dates[0].replaceAll("/", "-");
-        start = start.replaceAll(" ", "");
-        var end = dates[1].replaceAll("/", "-");
-        end = end.replaceAll(" ", "");
+    //}
+    //componentDidUpdate() {
+    //    const myUrlWithParams = new URL(webAPI_URL + offersROUTE );
+    //    const date = this.state.when;
+    //    const dates = date.split("-");
+    //    var start = dates[0].replaceAll("/", "-");
+    //    start = start.replaceAll(" ", "");
+    //    var end = dates[1].replaceAll("/", "-");
+    //    end = end.replaceAll(" ", "");
 
-        myUrlWithParams.searchParams.append("startDate", start);
-        myUrlWithParams.searchParams.append("endDate", end);
-        myUrlWithParams.searchParams.append("departure", this.state.departure);
-        myUrlWithParams.searchParams.append("destination", this.state.destination);
-        myUrlWithParams.searchParams.append("adults", this.state.adults);
-        myUrlWithParams.searchParams.append("children_under_3", this.state.children_under_3);
-        myUrlWithParams.searchParams.append("children_under_10", this.state.children_under_10);
-        myUrlWithParams.searchParams.append("children_under_18", this.state.children_under_18);
+    //    myUrlWithParams.searchParams.append("startDate", start);
+    //    myUrlWithParams.searchParams.append("endDate", end);
+    //    myUrlWithParams.searchParams.append("departure", this.state.departure);
+    //    myUrlWithParams.searchParams.append("destination", this.state.destination);
+    //    myUrlWithParams.searchParams.append("adults", this.state.adults);
+    //    myUrlWithParams.searchParams.append("children_under_3", this.state.children_under_3);
+    //    myUrlWithParams.searchParams.append("children_under_10", this.state.children_under_10);
+    //    myUrlWithParams.searchParams.append("children_under_18", this.state.children_under_18);
 
 
-        if (!equals(this.state.offers, this.state.previousOffers) ) {
-            axios.get(myUrlWithParams.href)
-                .then(res => {
-                    if (!equals(this.state.offers, res.data)) {
-                        this.setState({ previousOffers: this.state.offers });
-                        this.setState({ offers: res.data });
-                    }
+    //    if (!equals(this.state.offers, this.state.previousOffers) ) {
+    //        axios.get(myUrlWithParams.href)
+    //            .then(res => {
+    //                if (!equals(this.state.offers, res.data)) {
+    //                    this.setState({ previousOffers: this.state.offers });
+    //                    this.setState({ offers: res.data });
+    //                }
                    
 
-                })
-        }
+    //            })
+    //    }
        
-    }
+    //}
 
       handleClick = offer => () => {
 
@@ -145,13 +144,12 @@ export class Offer extends React.Component {
     };
 
     render() {
-        if (!equals(this.state.offers, this.state.mockOffers)) {
+        if (!equals(this.state.offers, [])) {
 
 
             return (
-                <div className="border list-group-item mt-1 offer h5">
-                    <h3 className="text-center mt-5">Wyniki wyszukiwania</h3>
-
+                <div>
+                  
                     <ul>
                         {
                             this.state.offers
@@ -181,7 +179,7 @@ export class Offer extends React.Component {
         else {
             return (
                 <div className="border list-group-item mt-1 offer h5">
-                    <h3 className="text-center mt-5">Wyniki wyszukiwania</h3>
+                    
                     <h4 className="text-center mt-5">Brak ofert przy wybranych filtrach</h4>
                 </div>
                 )
