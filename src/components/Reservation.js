@@ -39,7 +39,8 @@ export class Reservation extends Component {
         price: "niedostępna",
         promotionCode: "brak kodu rabatowego",
         showCode: false,
-        postId: ""
+        postId: "",
+        promotionCodeOk: false
 
     }
 
@@ -102,6 +103,15 @@ export class Reservation extends Component {
     handleSubmit = (data) => {
         if (data.promotionCode === undefined || data.promotionCode === "" ) {
             data.promotionCode = "brak kodu rabatowego";
+        }
+        if (data.promotionCode === "abcd") {
+            this.setState({
+                promotionCodeOk: true
+            });
+        } else {
+            this.setState({
+                promotionCodeOk: false
+            });
         }
 
         this.setState({
@@ -182,12 +192,18 @@ export class Reservation extends Component {
     render() {
         let button;
         let information;
+        let priceInformation;
+        let codeButton;
         if (this.state.offerAvailable) {
             information = <h5 style={{ color: 'green' }}> Oferta dostępna </h5>
             button = <button className="reserve" onClick={this.handleClick}>Rezerwuj</button>
+            priceInformation = <h3>Cena: {this.state.price} PLN</h3>
+            codeButton = <button type={"submit"} className="reserve">Wykorzystaj kod </button>
         } else {
             button = <button className="Disabled">Rezerwuj</button>
             information = <h5 style={{ color: 'red' }}> Oferta niedostępna </h5>
+            priceInformation = <h3>Cena: niedostępna</h3>
+            codeButton = <button type={"submit"} className="Disabled">Wykorzystaj kod </button>
         }
 
         return (
@@ -215,7 +231,7 @@ export class Reservation extends Component {
                     <p>
 
                     </p>
-                    <h3>Cena: {this.state.price} PLN</h3>
+                    {priceInformation}
                 </div>
                 <p>
 
@@ -244,17 +260,16 @@ export class Reservation extends Component {
 
                                 </p>
                                 <div >
-                                    <button
-                                        type={"submit"}
-                                        className="reserve">
-                                        Wykorzystaj kod
-                                    </button>
+                                    {codeButton}
 
                                     <p>
                                     </p>
                                     <div>
-                                        {this.state.showCode ? <h5>Wykorzystany kod: {this.state.promotionCode} </h5> : null}
-                                        {this.state.showCode ? () => this.setState({ showCode: false}) : null}
+
+                                        {(this.state.promotionCodeOk && this.state.showCode) ? <h5>Wykorzystany kod: {this.state.promotionCode} uprawnia do zniżki w wysokości 10% </h5> : null}
+                                        {(this.state.promotionCodeOk && this.state.showCode) ? () => this.setState({ promotionCodeOk: false, showCode: false }) : null}
+                                        {(!this.state.promotionCodeOk && this.state.showCode) ? <h5>Wykorzystany kod: nieprawidłowy </h5> : null}
+                                        {(!this.state.promotionCodeOk && this.state.showCode) ? () => this.setState({ promotionCodeOk: false, showCode: false }) : null}
                                     </div>
                                 </div>
                             </FormElement>

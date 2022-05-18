@@ -13,6 +13,7 @@ import { Payment } from "./components/Payment";
 import { ReservationError } from "./components/ReservationError";
 import { PaymentInformation } from "./components/PaymentInformation";
 import { LoginInformation } from "./components/LoginInformation";
+import { MyAccount } from "./components/MyAccount";
 import './custom.css'
 
 
@@ -34,6 +35,7 @@ export default class App extends Component {
             <Route path="/reservationError" component={ReservationError} />
             <Route path="/paymentInformation" component={PaymentInformation} />
             <Route path="/loginInformation" component={LoginInformation} />
+            <Route path="/myAccount" component={MyAccount} />
       </Layout>
     );
   }

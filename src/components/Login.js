@@ -3,19 +3,20 @@
 import { Form, Field, FormElement } from "@progress/kendo-react-form";
 import { Input } from "@progress/kendo-react-inputs";
 const webAPI_URL = "http://localhost:8090";
-const userROUTE = "/Users/User";
+const userROUTE = "/Login/Auth";
+
+const equals = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 
 export class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
             user: "",
-            password: "",
-            userExists: true
+            password: ""
         };
     }
 
-    handleSubmit = (data) => {
+    handleSubmit = async (data) => {
 
         this.setState({
             user: data.login,
@@ -29,24 +30,50 @@ export class Login extends Component {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                user: data.login,
+                login: data.login,
                 password: data.password
             })
         };
 
-        fetch(webAPI_URL + userROUTE, requestOptions);
+        const response = await fetch(webAPI_URL + userROUTE, requestOptions);
 
-        if (this.state.userExists) {
-            sessionStorage.setItem('user-key', data.login);
+        if (!response.ok) {
+
+            const parameters = {
+                user: data.login,
+                userExists: false
+            };
+
+            const myUrlWithParams = new URLSearchParams(parameters);
+
+            window.location.href = "/loginInformation?" + myUrlWithParams;
+        }
+        else {
+            const resp = await response.json();
+            console.log(resp);
+            const guidNumber = resp.userId;
+            console.log(guidNumber);
+
+            this.setState({
+                guid: guidNumber,
+                userExists: true
+            });
+
+            let obj = { user: data.login, guid: guidNumber }
+            sessionStorage.setItem('user-key', JSON.stringify(obj));
+
+            const parameters = {
+                user: data.login,
+                userExists: true
+
+            };
+
+            const myUrlWithParams = new URLSearchParams(parameters);
+
+            window.location.href = "/loginInformation?" + myUrlWithParams;
         }
 
-        const parameters = {
-            user: data.login,
-
-        }
-        const myUrlWithParams = new URLSearchParams(parameters);
-
-        window.location.href = "/loginInformation?" + myUrlWithParams;
+        
 
     };
 
@@ -96,7 +123,7 @@ export class Login extends Component {
                                     <button
                                         type={"submit"}
                                         className="log"
-                                        onClick={this.handleSubmit}>
+                                        >
                                         Zaloguj się
                                     </button>
                                 </div>

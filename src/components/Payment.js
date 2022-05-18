@@ -1,8 +1,9 @@
 ﻿import React, { Component } from 'react';
 const webAPI_URL = "http://localhost:8090";
 const paymentROUTE = "/Offers/Pay";
-import { Form, Field, FormElement } from "@progress/kendo-react-form";
 import { Input } from "@progress/kendo-react-inputs";
+import { Form, FormElement } from "@progress/kendo-react-form";
+
 
 const searchParams = new URLSearchParams(window.location.search);
 
@@ -43,6 +44,19 @@ export class Payment extends Component {
 
         // GET promotionPrice
 
+        var p;
+        var pp;
+
+        if (searchParams.get("promotionCode") === "abcd") {
+            p = Number(searchParams.get("price"));
+            pp = 0.9 * p;
+
+            this.setState({
+                promotionPrice: pp
+            });
+
+        }
+
         this.setState({
             offerId: searchParams.get("offerId"),
             hotelName: searchParams.get("hotelName"),
@@ -63,7 +77,6 @@ export class Payment extends Component {
             wifi: searchParams.get("wifi"),
             price: searchParams.get("price"),
             promotionCode: searchParams.get("promotionCode")
-            //promotionPrice: 
         });
     }
 

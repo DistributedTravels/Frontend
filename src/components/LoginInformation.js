@@ -14,30 +14,15 @@ export class LoginInformation extends Component {
 
     state = {
         user: "",
-        userExists: true
+        userExists: ""
     }
 
     componentDidMount() {
 
         this.setState({
-            user: searchParams.get("user")
-        });
-
-        //GET if user exists
-
-        const myUrlWithParams = new URL(webAPI_URL + userROUTE);
-
-        myUrlWithParams.searchParams.append("user", searchParams.get("user"));
-
-
-        //axios.get(myUrlWithParams.href)
-        //    .then(res => {
-        //        this.setState({ userExists: res.data });
-        // 
-        //    })
-
-        // if user exists
-        
+            user: searchParams.get("user"),
+            userExists: searchParams.get("userExists")
+        });        
   
     }
 
@@ -46,7 +31,7 @@ export class LoginInformation extends Component {
 
         return (
             < div className="border list-group-item mt-1 offer h5">
-                {this.state.userExists ?
+                {this.state.userExists === "true" ?
                     <h5 style={{ color: 'green' }}> Zalogowano jako:  {this.state.user}</h5> :
                     <h5 style={{ color: 'red' }}> Podano niepoprawny login lub hasło, albo użytkownik nie istnieje </h5>
                 }

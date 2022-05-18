@@ -4,7 +4,6 @@ import { Link} from 'react-router-dom';
 import './NavMenu.css';
 
 
-
 export class NavMenu extends Component {
     static displayName = NavMenu.name;
     
@@ -44,7 +43,13 @@ export class NavMenu extends Component {
 }
 
 
-  render () {
+    render() {
+        let data = sessionStorage.getItem('user-key');
+        if (!(data === null)) {
+            data = JSON.parse(data);
+        }
+
+        
     return (
       <header>
         <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
@@ -63,11 +68,12 @@ export class NavMenu extends Component {
                 {sessionStorage.getItem('user-key') ?
                     <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                         <DropdownToggle caret>
-                                        {sessionStorage.getItem('user-key')}
+                                        {data.user}
                         </DropdownToggle>
                         <DropdownMenu>
 
                             <DropdownItem onClick={this.logout}>Wyloguj</DropdownItem>
+                            <DropdownItem tag={Link} className="text-dark" to="/myAccount">Moje konto</DropdownItem>
 
                         </DropdownMenu>
                     </Dropdown>:
