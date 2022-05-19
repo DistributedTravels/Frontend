@@ -161,26 +161,9 @@ export class Reservation extends Component {
         id = data.id;
 
         const parameters = {
-            offerId: this.state.offerId,
-            hotelName: this.state.hotelName,
-            hotelId: this.state.hotelId,
-            transportId: this.state.transportId,
-            startDate: this.state.startDate,
-            endDate: this.state.endDate,
-            departure: this.state.departure,
-            destination: this.state.destination,
-            adults: this.state.adults,
-            children_under_3: this.state.children_under_3,
-            children_under_10: this.state.children_under_10,
-            children_under_18: this.state.children_under_18,
-            number_of_2_room: this.state.number_of_2_room,
-            number_of_apartaments: this.state.number_of_apartaments,
-            transport: this.state.transport,
-            breakfast: this.state.breakfast,
-            wifi: this.state.wifi,
-            price: this.state.price,
+            postId: id,
             promotionCode: this.state.promotionCode,
-            postId: id
+            price: this.state.price
         }
         const myUrlWithParams = new URLSearchParams(parameters);
         console.log(parameters);

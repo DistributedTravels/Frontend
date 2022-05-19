@@ -1,45 +1,10 @@
-﻿import React, { Component, useEffect  } from 'react';
+﻿import React, { Component } from 'react';
 import axios from 'axios';
 const webAPI_URL = "http://localhost:8090";
 const reservationROUTE = "/Reservation/CheckReservationStatus";
 
 const searchParams = new URLSearchParams(window.location.search);
 
-async function check() {
-    //GET if reservation OK
-
-    const myUrlWithParams = new URL(webAPI_URL + reservationROUTE);
-
-    myUrlWithParams.searchParams.append("reservationId", searchParams.get("postId"));
-
-    var status = 0;
-
-    axios.get(myUrlWithParams.href)
-        .then(res => {
-            this.setState({ reservationOK: res.data.reservationStatus });
-            status = res.data.reservationStatus;
-        })
-
-
-    if (status === 1) {
-        const parameters = {
-            postId: searchParams.get("postId")
-        }
-
-        const myRedirectUrlWithParams = new URLSearchParams(parameters);
-
-        if (this.state.reservationOK) {
-            window.location.href = "/payment?" + myRedirectUrlWithParams;
-        }
-    }
-
-}
-
-useEffect(() => {
-    check();
-
-}, []);
-setInterval(check, 4000);
 export class ReservationError extends Component
 {
 
@@ -55,13 +20,44 @@ export class ReservationError extends Component
 
     }
 
-    
+    loadData = async () => {
 
-   
+        try {
+
+            const myUrlWithParams = new URL(webAPI_URL + reservationROUTE);
+
+            myUrlWithParams.searchParams.append("reservationId", searchParams.get("postId"));
+
+            //var status = 0;
+
+            axios.get(myUrlWithParams.href)
+                .then(res => {
+                    console.log(res.data);
+                    this.setState({ reservationOK: res.data.reservationStatus })
+                    //status = res.data.reservationStatus;
+                })
+
+
+            if (this.state.reservationOK === 1) {
+                const parameters = {
+                    postId: searchParams.get("postId"),
+                    price: searchParams.get("price"),
+                    promotionCode: searchParams.get("promotionCode")
+                }
+
+                const myRedirectUrlWithParams = new URLSearchParams(parameters);
+
+                window.location.href = "/payment?" + myRedirectUrlWithParams;
+            }
+        } catch (e) {
+            console.log(e);
+        }
+}
+
 
     componentDidMount() {
-        console.log(searchParams);
-        useEffect();
+        
+        
 
         if (sessionStorage.getItem('user-key')) {
 
@@ -71,6 +67,9 @@ export class ReservationError extends Component
         else {
             this.setState({ userLogged: false });
         }
+
+        this.loadData();
+        setInterval(this.loadData, 4000);
 
         
     }
@@ -86,7 +85,7 @@ export class ReservationError extends Component
                 }
                 {this.state.reservationOK === 3 ?
                     <h5 style={{ color: 'red' }}> Błąd rezerwacji. Oferta już niedostępna </h5> :
-                    null
+                    <h5 > Oczekiwanie ... </h5>
                 }
                 
                </ div >

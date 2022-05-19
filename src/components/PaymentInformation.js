@@ -1,10 +1,11 @@
 ﻿import React, { Component } from 'react';
-const webAPI_URL = "http://localhost:8090";
-const paymentROUTE = "/Offers/GetPaymentStatus";
+
 import axios from 'axios';
 
 const searchParams = new URLSearchParams(window.location.search);
 
+const webAPI_URL = "http://localhost:8090";
+const reservationROUTE = "/Reservation/CheckReservationStatus";
 export class PaymentInformation extends React.Component {
 
     constructor(props) {
@@ -12,77 +13,62 @@ export class PaymentInformation extends React.Component {
     }
 
     state = {
-        offerId: "",
-        hotelName: "",
-        hotelId: "",
-        transportId: "",
-        startDate: "",
-        endDate: "",
-        departure: "",
-        destination: "",
-        adults: "",
-        children_under_3: "",
-        children_under_10: "",
-        children_under_18: "",
-        number_of_2_room: "",
-        number_of_apartaments: "",
-        transport: "",
-        breakfast: "",
-        wifi: "",
-        price: "",
-        promotionCode: "",
-        paymentSucceeded: false
+        //offerId: "",
+        //hotelName: "",
+        //hotelId: "",
+        //transportId: "",
+        //startDate: "",
+        //endDate: "",
+        //departure: "",
+        //destination: "",
+        //adults: "",
+        //children_under_3: "",
+        //children_under_10: "",
+        //children_under_18: "",
+        //number_of_2_room: "",
+        //number_of_apartaments: "",
+        //transport: "",
+        //breakfast: "",
+        //wifi: "",
+        //price: "",
+        //promotionCode: "",
+        paymentSucceeded: "",
+        postId: ""
 
+    }
+
+    loadData = async () => {
+
+        try {
+
+            const myUrlWithParams = new URL(webAPI_URL + reservationROUTE);
+
+            myUrlWithParams.searchParams.append("reservationId", searchParams.get("postId"));
+
+            axios.get(myUrlWithParams.href)
+                .then(res => {
+                    console.log(res.data);
+                    this.setState({ paymentSucceeded: res.data.reservationStatus })
+                    
+                })
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     componentDidMount() {
         console.log(searchParams);
 
-        const parameters = {
-            offerId: searchParams.get("offerId"),
-            hotelName: searchParams.get("hotelName"),
-            hotelId: searchParams.get("hotelId"),
-            transportId: searchParams.get("transportId"),
-            startDate: searchParams.get("startDate"),
-            endDate: searchParams.get("endDate"),
-            departure: searchParams.get("departure"),
-            destination: searchParams.get("destination"),
-            adults: searchParams.get("adults"),
-            children_under_3: searchParams.get("children_under_3"),
-            children_under_10: searchParams.get("children_under_10"),
-            children_under_18: searchParams.get("children_under_18"),
-            number_of_2_room: searchParams.get("number_of_2_room"),
-            number_of_apartaments: searchParams.get("number_of_apartaments"),
-            transport: searchParams.get("transport"),
-            breakfast: searchParams.get("breakfast"),
-            wifi: searchParams.get("wifi"),
-            price: searchParams.get("price"),
-            promotionCode: searchParams.get("promotionCode")
-        }
-
-
-        //GET if payment OK
-
-        const myUrlWithParams = new URL(webAPI_URL + paymentROUTE);
-
-        // tu dodawać
-        //myUrlWithParams.searchParams.append("startDate", start);
-
-
-        //axios.get(myUrlWithParams.href)
-        //    .then(res => {
-        //        this.setState({ paymentSucceeded: res.data });
-       
-        //    })
-
+        this.loadData();
+        setInterval(this.loadData, 4000);
 
     }
 
     render() {
         let information;
-        if (this.state.paymentSucceeded) {
+        if (this.state.paymentSucceeded === 2) {
             information = <h5 style={{ color: 'green' }}> Płatność przezła pomyślnie. Oferta zarezerwowana. </h5>
-        } else {
+        } if (this.state.paymentSucceeded === 3) {
             information = <h5 style={{ color: 'red' }}> Płatność nie przeszła pomyślnie. Oferta niezarezerwowana. </h5>
         }
 

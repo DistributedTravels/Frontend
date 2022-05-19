@@ -1,9 +1,10 @@
 ﻿import React, { Component } from 'react';
-const webAPI_URL = "http://localhost:8090";
-const paymentROUTE = "/Offers/Pay";
-import { Input } from "@progress/kendo-react-inputs";
-import { Form, FormElement } from "@progress/kendo-react-form";
 
+import { Form, Field, FormElement } from "@progress/kendo-react-form";
+
+import { Input } from "@progress/kendo-react-inputs";
+const webAPI_URL = "http://localhost:8090";
+const paymentROUTE = "/Payment/SendInformation";
 
 const searchParams = new URLSearchParams(window.location.search);
 
@@ -36,7 +37,11 @@ export class Payment extends Component {
         promotionPrice: "brak zniżki",
         promotionCode: "brak kodu rabatowego",
         cardNumber: "",
-        paymentSucceeded: false
+        fullName: "",
+        CVV: "",
+        expDate: "",
+        paymentSucceeded: false,
+        postId: ""
         
     }
 
@@ -76,14 +81,31 @@ export class Payment extends Component {
             breakfast: searchParams.get("breakfast"),
             wifi: searchParams.get("wifi"),
             price: searchParams.get("price"),
-            promotionCode: searchParams.get("promotionCode")
+            promotionCode: searchParams.get("promotionCode"),
+            postId: searchParams.get("postId"),
         });
     }
 
-    handleSubmit = (data) => {
+    handleSubmit = async (data) => {
+
+        if (data.cardNumber === undefined) {
+            data.cardNumber = "";
+        }
+        if (data.CVV === undefined) {
+            data.CVV = "";
+        }
+        if (data.expDate === undefined) {
+            data.expDate = "";
+        }
+        if (data.fullName === undefined) {
+            data.fullName = "";
+        }
 
         this.setState({
-            cardNumber: data.cardNumber
+            cardNumber: data.cardNumber,
+            fullName: data.fullName,
+            CVV: data.CVV,
+            expDate: data.expDate
         });
 
         //POST  with payment
@@ -92,64 +114,35 @@ export class Payment extends Component {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                offerId: this.state.offerId,
-                hotelName: this.state.hotelName,
-                hotelId: this.state.hotelId,
-                transportId: this.state.transportId,
-                startDate: this.state.startDate,
-                endDate: this.state.endDate,
-                departure: this.state.departure,
-                destination: this.state.destination,
-                adults: this.state.adults,
-                children_under_3: this.state.children_under_3,
-                children_under_10: this.state.children_under_10,
-                children_under_18: this.state.children_under_18,
-                number_of_2_room: this.state.number_of_2_room,
-                number_of_apartaments: this.state.number_of_apartaments,
-                transport: this.state.transport,
-                breakfast: this.state.breakfast,
-                wifi: this.state.wifi,
-                price: this.state.price,
-                promotionCode: this.state.promotionCode
+                number: data.cardNumber,
+                fullName: data.fullName,
+                cVV: data.CVV,
+                expDate: data.expDate,
+                reservationId: this.state.postId
 
             })
         };
 
-        fetch(webAPI_URL + paymentROUTE, requestOptions);
-
-        if (data.cardNumber === undefined) {
-            data.cardNumber = "";
-        }
-
+        const response = await fetch(webAPI_URL + paymentROUTE, requestOptions)
+        const resp = await response.json();
+      
         const parameters = {
-            offerId: this.state.offerId,
-            hotelName: this.state.hotelName,
-            hotelId: this.state.hotelId,
-            transportId: this.state.transportId,
-            startDate: this.state.startDate,
-            endDate: this.state.endDate,
-            departure: this.state.departure,
-            destination: this.state.destination,
-            adults: this.state.adults,
-            children_under_3: this.state.children_under_3,
-            children_under_10: this.state.children_under_10,
-            children_under_18: this.state.children_under_18,
-            number_of_2_room: this.state.number_of_2_room,
-            number_of_apartaments: this.state.number_of_apartaments,
-            transport: this.state.transport,
-            breakfast: this.state.breakfast,
-            wifi: this.state.wifi,
-            price: this.state.price,
-            promotionCode: this.state.promotionCode
+            postId: this.state.postId
+            
         }
         const myUrlWithParams = new URLSearchParams(parameters);
-        window.location.href = "/paymentInformation?" + myUrlWithParams;
+        console.log(parameters);
 
+        window.location.href = "/paymentInformation?" + myUrlWithParams;
         
     };
 
     render() {
-        const validationMessage = "Wprowadź tylko liczby";
+       
+        let but;
+        but = <button type={"submit"} className="reserve"> Zapłać </button>
+        
+        
 
         return (
             <div className="border list-group-item mt-1 offer h5">
@@ -169,19 +162,60 @@ export class Payment extends Component {
                 </p>
 
                 <div className="border list-group-item mt-1 offer h5">
-                    <h5>Podaj numer karty do płatności</h5>
+                    
                     <Form
                         onSubmit={this.handleSubmit}
                         render={(formRenderProps) => (
                             <FormElement>
+                                <h5>Numer karty</h5>
                                 <fieldset>
                                     <div>
-                                        <Input
+                                        <Field
                                             name={"cardNumber"}
-                                            pattern={"[0-9]+"}
                                             minLength={12}
                                             maxLength={12}
-                                            required={true}
+                                            pattern={"[0-9]+"}
+                                            component={Input}
+
+                                        />
+                                    </div>
+                                </fieldset>
+                                <h5>CVV</h5>
+                                <fieldset>
+                                    <div>
+                                        <Field
+                                            name={"CVV"}
+                                            minLength={3}
+                                            maxLength={3}
+                                            pattern={"[0-9]+"}
+                                            component={Input}
+
+                                        />
+                                    </div>
+                                </fieldset>
+                                <h5>Imię i nazwisko</h5>
+                                <fieldset>
+                                    <div>
+                                        <Field
+                                            name={"fullName"}
+                                            minLength={4}
+                                            maxLength={35}
+                                            pattern={"[a-zA-Z ]+"}
+                                            component={Input}
+
+                                        />
+                                    </div>
+                                </fieldset>
+                                <h5>Data ważności karty mm/YY</h5>
+                                <fieldset>
+                                    <div>
+                                        <Field
+                                            name={"expDate"}
+                                            minLength={5}
+                                            maxLength={5}
+                                            pattern={"[0-9/]+"}
+                                            component={Input}
+
                                         />
                                     </div>
                                 </fieldset>
@@ -191,9 +225,8 @@ export class Payment extends Component {
                                 <div >
                                     <button
                                         type={"submit"}
-                                        className="reserve"
-                                        
-                                        onClick={this.handleSubmit}>
+                                        className="log"
+                                    >
                                         Zapłać
                                     </button>
                                 </div>
