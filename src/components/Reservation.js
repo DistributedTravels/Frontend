@@ -127,6 +127,11 @@ export class Reservation extends Component {
 
         //POST  z rezerwacją
 
+        let ss = sessionStorage.getItem('user-key');
+        if (!(ss === null)) {
+            ss = JSON.parse(ss);
+        }
+
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -147,7 +152,8 @@ export class Reservation extends Component {
                 number_of_apartaments: this.state.number_of_apartaments,
                 transport: this.state.transport,
                 breakfast: this.state.breakfast,
-                wifi: this.state.wifi
+                wifi: this.state.wifi,
+                userId: ss.guid
                 //promotionCode: this.state.promotionCode
 
             })
