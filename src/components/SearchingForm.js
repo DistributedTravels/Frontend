@@ -31,14 +31,15 @@ export class SearchingForm extends Component {
     state = {
         showOffers: false,
         searchingParam: {
-            when: baseDate+"-"+baseDate,
+            when: baseDate + "-" + baseDate,
             departure: "Warszawa",
             destination: "gdziekolwiek",
             adults: "1",
             children_under_3: "0",
             children_under_10: "0",
             children_under_18: "0",
-            offers: []
+            offers: [],
+            beforeSearch: true
         }
     }
 
@@ -66,7 +67,7 @@ export class SearchingForm extends Component {
         //if (data.children_under_18 === undefined) {
         //    data.children_under_18 = "0";
         //}
-       
+
         this.setState({
             searchingParam: {
                 ...this.state.searchingParam,
@@ -76,8 +77,9 @@ export class SearchingForm extends Component {
                 adults: data.adults,
                 children_under_3: data.children_under_3,
                 children_under_10: data.children_under_10,
-                children_under_18: data.children_under_18
-                
+                children_under_18: data.children_under_18,
+                beforeSearch: true
+
             }
         });
 
@@ -106,7 +108,8 @@ export class SearchingForm extends Component {
                 this.setState({
                     searchingParam: {
                         ...this.state.searchingParam,
-                        offers: res.data
+                        offers: res.data,
+                        beforeSearch: false
 
                     }
                 });
@@ -130,7 +133,7 @@ export class SearchingForm extends Component {
                             children_under_3: "0",
                             children_under_10: "0",
                             children_under_18: "0"
-                            
+
                         }}
                         render={(formRenderProps) => (
                             <form onSubmit={formRenderProps.onSubmit}>
@@ -188,18 +191,15 @@ export class SearchingForm extends Component {
 
                                 </p>
 
-                                <input type="submit" value="Szukaj"  />
-                               
+                                <input type="submit" value="Szukaj" />
+
 
                             </form>
                         )}>
                     </Form>
                 </div>
-                <div className="border list-group-item mt-1 offer h5">
-                    <h3 className="text-center mt-5">Wyniki wyszukiwania</h3>
-                    
-                    {<Offer param={this.state.searchingParam} /> }
-                    
+                <div>
+                    {<Offer param={this.state.searchingParam} />}
 
                 </div>
             </div>

@@ -37,7 +37,8 @@ export class CheckOfferForDestination extends Component {
             children_under_3: "0",
             children_under_10: "0",
             children_under_18: "0",
-            offers: []
+            offers: [],
+            beforeSearch: true
         }
     }
 
@@ -73,7 +74,8 @@ export class CheckOfferForDestination extends Component {
                 this.setState({
                     searchingParam: {
                         ...this.state.searchingParam,
-                        offers: res.data
+                        offers: res.data,
+                        beforeSearch: false
 
                     }
                 });
@@ -92,7 +94,8 @@ export class CheckOfferForDestination extends Component {
                 adults: data.adults,
                 children_under_3: data.children_under_3,
                 children_under_10: data.children_under_10,
-                children_under_18: data.children_under_18
+                children_under_18: data.children_under_18,
+                beforeSearch: true
             }
         });
 
@@ -121,7 +124,8 @@ export class CheckOfferForDestination extends Component {
                 this.setState({
                     searchingParam: {
                         ...this.state.searchingParam,
-                        offers: res.data
+                        offers: res.data,
+                        beforeSearch: false
 
                     }
                 });
@@ -212,7 +216,6 @@ export class CheckOfferForDestination extends Component {
                     </Form>
                 </div>
                 <div className="border list-group-item mt-1 offer h5">
-                    <h3 className="text-center mt-5">Wyniki wyszukiwania</h3>
 
                     {<Offer param={this.state.searchingParam} />}
 

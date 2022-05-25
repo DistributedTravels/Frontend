@@ -69,7 +69,7 @@ export class Reservation extends Component {
         const myUrlWithParams = new URL(webAPI_URL + offersAvailableROUTE);
 
         //myUrlWithParams.searchParams.append("offerId", searchParams.get("offerId"));
-        //myUrlWithParams.searchParams.append("hotelName", searchParams.get("hotelName"));
+        myUrlWithParams.searchParams.append("hotelName", searchParams.get("hotelName"));
         myUrlWithParams.searchParams.append("hotelId", searchParams.get("hotelId"));
         myUrlWithParams.searchParams.append("transportId", searchParams.get("transportId"));
         myUrlWithParams.searchParams.append("startDate", searchParams.get("startDate"));
@@ -137,7 +137,7 @@ export class Reservation extends Component {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 //offerId: this.state.offerId,
-                //hotelName: this.state.hotelName,
+                hotelName: this.state.hotelName,
                 hotelId: this.state.hotelId,
                 transportId: this.state.transportId,
                 startDate: this.state.startDate,
@@ -153,8 +153,8 @@ export class Reservation extends Component {
                 transport: this.state.transport,
                 breakfast: this.state.breakfast,
                 wifi: this.state.wifi,
-                userId: ss.guid
-                //promotionCode: this.state.promotionCode
+                userId: ss.guid,
+                promotionCode: this.state.promotionCode
 
             })
         };

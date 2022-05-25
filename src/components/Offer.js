@@ -13,19 +13,20 @@ export class Offer extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            when: baseDate+"-"+baseDate,
+            when: baseDate + "-" + baseDate,
             departure: "Warszawa",
             destination: "gdziekolwiek",
             adults: "1",
             children_under_3: "0",
             children_under_10: "0",
             children_under_18: "0",
-            offers: []
-           
-            
+            offers: [],
+            beforeSearch: true
+
+
         };
     }
-  
+
     componentWillReceiveProps(nextProps) {
         this.setState({ when: nextProps.param.when })
         this.setState({ departure: nextProps.param.departure })
@@ -35,11 +36,12 @@ export class Offer extends React.Component {
         this.setState({ children_under_10: nextProps.param.children_under_10 })
         this.setState({ children_under_18: nextProps.param.children_under_18 })
         this.setState({ offers: nextProps.param.offers })
+        this.setState({ beforeSearch: nextProps.param.beforeSearch })
 
     }
 
 
-      handleClick = offer => () => {
+    handleClick = offer => () => {
 
         const date = this.state.when;
         const dates = date.split("-");
@@ -49,11 +51,11 @@ export class Offer extends React.Component {
         end = end.replaceAll(" ", "");
 
         var id = "";
-          if (offer.offerId === undefined) {
-              id = "defaultId";
-          } else {
-              id = offer.offerId;
-          }
+        if (offer.offerId === undefined) {
+            id = "defaultId";
+        } else {
+            id = offer.offerId;
+        }
 
 
         const parameters = {
@@ -78,12 +80,13 @@ export class Offer extends React.Component {
     };
 
     render() {
-        if (!equals(this.state.offers, [])) {
 
+
+        if (!equals(this.state.offers, []) && !this.state.beforeSearch) {
 
             return (
-                <div>
-                  
+                <div className="border list-group-item mt-1 offer h5">
+                    <h3 className="text-center mt-5">Wyniki wyszukiwania</h3>
                     <ul>
                         {
                             this.state.offers
@@ -102,7 +105,8 @@ export class Offer extends React.Component {
                                             <button className="search" onClick={this.handleClick(offer)}>Sprawdź ofertę</button>
 
                                         </li>
-                                )})
+                                    )
+                                })
                         }
                     </ul>
 
@@ -110,13 +114,22 @@ export class Offer extends React.Component {
 
             )
         }
-        else {
+
+        else if (!this.state.beforeSearch) {
             return (
                 <div className="border list-group-item mt-1 offer h5">
-                    
+                    <h3 className="text-center mt-5">Wyniki wyszukiwania</h3>
                     <h4 className="text-center mt-5">Brak ofert przy wybranych filtrach</h4>
                 </div>
-                )
+            )
+        }
+        else {
+            return (
+                <div >
+
+                    <h4 className="text-center mt-5"></h4>
+                </div>
+            )
         }
     }
 }

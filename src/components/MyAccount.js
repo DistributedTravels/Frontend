@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const webAPI_URL = "http://localhost:8090";
-const myAccountROUTE = "";
+const myAccountROUTE = "/Reservation/GetReservations";
 
 const equals = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 
@@ -11,29 +11,28 @@ export class MyAccount extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            offers: [],
-            guid: ""
-
-
+            reservations: []
         };
     }
 
     componentDidMount() {
 
-      //GET guid form session storage
-      // ver guid = sessionStorage.getItem('user-key')
+        let ss = sessionStorage.getItem('user-key');
+        if (!(ss === null)) {
+            ss = JSON.parse(ss);
+        }
 
-        //const myUrlWithParams = new URL(webAPI_URL + myAccountROUTE);
+        const myUrlWithParams = new URL(webAPI_URL + myAccountROUTE);
 
-        //myUrlWithParams.searchParams.append("guid", guid);
+        myUrlWithParams.searchParams.append("userId", ss.guid);
        
-        //axios.get(myUrlWithParams.href)
-        //    .then(res => {
-        //        this.setState({
-        //            offers: res.data
-        //        });
+        axios.get(myUrlWithParams.href)
+            .then(res => {
+                this.setState({
+                    reservations: res.data
+                });
 
-        //    })
+            })
     }
 
     render() {
@@ -41,23 +40,31 @@ export class MyAccount extends React.Component {
 
             return (
                 <div>
-                    <h1>Twoja historia</h1>
+                    <h1>Twoje rezerwacje</h1>
 
                     <ul>
                         {
-                            this.state.offers
-                                .map(offer => {
-                                    const dates = (offer.departureTime).split("T");
-                                    var date = dates[0];
-                                    var time = dates[1].replaceAll("Z", "");
+                            this.state.reservations
+                                .map(reservation => {
+                                    const beginDates = (reservation.beginDate).split("T");
+                                    var beginDate = beginDates[0];
+                                   
+                                    const endDates = (reservation.endDate).split("T");
+                                    var endDate = endDates[0];
 
                                     return (
 
-                                        <li key={offer.id} className="border list-group-item mt-5 offer">
-                                            <h4>{offer.hotelName}</h4>
-                                            <h5>{offer.destination}</h5>
-                                            <h5>Data: {date}</h5>
-                                            <h5>Czas wyjazdu: {time}</h5>
+                                        <li className="border list-group-item mt-5 offer">
+                                            <h5>Hotel: {reservation.hotelName}</h5>
+                                            <h5>Miejsce docelowe: {reservation.destination}</h5>
+                                            <h5>Miejsce wyjazdu: {reservation.departure}</h5>
+                                            <h5>Data: {beginDate} - {endDate}</h5>
+                                            <h5>Liczba osób dorosłych: {reservation.adults}</h5>
+                                            <h5>Liczba dzieci w wieku do 3 lat: {reservation.childrenUnder3}</h5>
+                                            <h5>Liczba dzieci w wieku do 10 lat: {reservation.childrenUnder10}</h5>
+                                            <h5>Liczba dzieci w wieku do 18 lat: {reservation.childrenUnder18}</h5>
+                                            <h5>Liczba pokojów 2-osobowych: {reservation.smallRooms}</h5>
+                                            <h5>Liczba apartmarntów: {reservation.bigRooms}</h5>
                                             
                                         </li>
                                     )
@@ -73,7 +80,7 @@ export class MyAccount extends React.Component {
             return (
                 <div className="border list-group-item mt-1 offer h5">
 
-                    <h3 className="text-center mt-5">Brak historii</h3>
+                    <h3 className="text-center mt-5">Brak historii rezerwacji</h3>
                 </div>
             )
         }

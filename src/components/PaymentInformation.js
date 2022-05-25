@@ -68,8 +68,11 @@ export class PaymentInformation extends React.Component {
         let information;
         if (this.state.paymentSucceeded === 2) {
             information = <h5 style={{ color: 'green' }}> Płatność przeszła pomyślnie. Oferta zarezerwowana. </h5>
-        } if (this.state.paymentSucceeded === 3) {
+        } else if (this.state.paymentSucceeded === 3) {
             information = <h5 style={{ color: 'red' }}> Płatność nie przeszła pomyślnie. Oferta niezarezerwowana. </h5>
+        }
+        else {
+            information = <h5> Oczekiwanie ... </h5 >
         }
 
         return (
