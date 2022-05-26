@@ -126,55 +126,67 @@ export class Reservation extends Component {
     handleClick = async () => {
 
         //POST  z rezerwacją
-
+        
         let ss = sessionStorage.getItem('user-key');
         if (!(ss === null)) {
             ss = JSON.parse(ss);
+
+
+            const requestOptions = {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    //offerId: this.state.offerId,
+                    hotelName: this.state.hotelName,
+                    hotelId: this.state.hotelId,
+                    transportId: this.state.transportId,
+                    startDate: this.state.startDate,
+                    endDate: this.state.endDate,
+                    departure: this.state.departure,
+                    destination: this.state.destination,
+                    adults: this.state.adults,
+                    children_under_3: this.state.children_under_3,
+                    children_under_10: this.state.children_under_10,
+                    children_under_18: this.state.children_under_18,
+                    number_of_2_room: this.state.number_of_2_room,
+                    number_of_apartaments: this.state.number_of_apartaments,
+                    transport: this.state.transport,
+                    breakfast: this.state.breakfast,
+                    wifi: this.state.wifi,
+                    userId: ss.guid,
+                    promotionCode: this.state.promotionCode
+
+                })
+            };
+
+            var id;
+
+            const response = await fetch(webAPI_URL + reserveROUTE, requestOptions)
+            const data = await response.json();
+            this.setState({ postId: data.id });
+            id = data.id;
+
+            const parameters = {
+                postId: id,
+                promotionCode: this.state.promotionCode,
+                price: this.state.price
+            }
+            const myUrlWithParams = new URLSearchParams(parameters);
+            console.log(parameters);
+
+            window.location.href = "/reservationError?" + myUrlWithParams;
         }
+        else {
+            const parameters = {
+                postId: null,
+                promotionCode: this.state.promotionCode,
+                price: this.state.price
+            }
+            const myUrlWithParams = new URLSearchParams(parameters);
+            console.log(parameters);
 
-        const requestOptions = {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                //offerId: this.state.offerId,
-                hotelName: this.state.hotelName,
-                hotelId: this.state.hotelId,
-                transportId: this.state.transportId,
-                startDate: this.state.startDate,
-                endDate: this.state.endDate,
-                departure: this.state.departure,
-                destination: this.state.destination,
-                adults: this.state.adults,
-                children_under_3: this.state.children_under_3,
-                children_under_10: this.state.children_under_10,
-                children_under_18: this.state.children_under_18,
-                number_of_2_room: this.state.number_of_2_room,
-                number_of_apartaments: this.state.number_of_apartaments,
-                transport: this.state.transport,
-                breakfast: this.state.breakfast,
-                wifi: this.state.wifi,
-                userId: ss.guid,
-                promotionCode: this.state.promotionCode
-
-            })
-        };
-
-        var id;
-           
-        const response = await fetch(webAPI_URL + reserveROUTE, requestOptions)
-        const data = await response.json();
-        this.setState({ postId: data.id });
-        id = data.id;
-
-        const parameters = {
-            postId: id,
-            promotionCode: this.state.promotionCode,
-            price: this.state.price
+            window.location.href = "/reservationError?" + myUrlWithParams;
         }
-        const myUrlWithParams = new URLSearchParams(parameters);
-        console.log(parameters);
-
-        window.location.href = "/reservationError?" + myUrlWithParams;
         
     };
 

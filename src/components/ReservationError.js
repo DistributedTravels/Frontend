@@ -62,14 +62,15 @@ export class ReservationError extends Component
         if (sessionStorage.getItem('user-key')) {
 
             this.setState({ userLogged: true });
+            this.loadData();
+            setInterval(this.loadData, 4000);
  
         }
         else {
             this.setState({ userLogged: false });
         }
 
-        this.loadData();
-        setInterval(this.loadData, 4000);
+        
 
         
     }
@@ -83,9 +84,9 @@ export class ReservationError extends Component
                     null :
                     <h5 style={{ color: 'red' }}> Użytkownik niezalogowany </h5>
                 }
-                {this.state.reservationOK === 3 ?
+                {(this.state.reservationOK === 3) ?
                     <h5 style={{ color: 'red' }}> Błąd rezerwacji. Oferta już niedostępna </h5> :
-                    <h5 > Oczekiwanie ... </h5>
+                    (this.state.userLogged ? < h5 > Oczekiwanie ... </h5> : null)
                 }
                 
                </ div >
