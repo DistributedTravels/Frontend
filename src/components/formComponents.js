@@ -17,7 +17,7 @@ export const DateInput = (fieldProps) => {
             <label>
                 {label}
             </label>
-            <DateRangePicker onApply={onChange} onCancel={(event, picker) => handleDateCancel(event, picker)} initialSettings={{ minDate: new Date("07/01/2022"), startDate: new Date("07/01/2022"), endDate: '09/30/2023' }}>
+            <DateRangePicker onApply={onChange} onCancel={(event, picker) => handleDateCancel(event, picker)} initialSettings={{ minDate: new Date("07/02/2022"), startDate: new Date("07/02/2022"), endDate: '09/30/2023' }}>
                 <input readOnly
                     value={value}
                     type="text" />

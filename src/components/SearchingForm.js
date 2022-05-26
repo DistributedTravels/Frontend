@@ -22,7 +22,8 @@ const offersROUTE = "/Offers/GetOffers";
 
 
 
-var baseDate = "07/01/2022";
+var baseDate = "07/02/2022";
+var baseDate2 = "07/09/2022";
 
 
 
@@ -126,7 +127,7 @@ export class SearchingForm extends Component {
                     <Form
                         onSubmit={this.handleSubmit.bind(this)}
                         initialValues={{
-                            when: "07/01/2022 - 07/01/2022",
+                            when: baseDate + " - " + baseDate2,
                             departure: "Warszawa",
                             destination: "gdziekolwiek",
                             adults: "0",

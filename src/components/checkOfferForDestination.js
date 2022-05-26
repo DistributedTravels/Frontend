@@ -20,7 +20,9 @@ import axios from 'axios';
 const webAPI_URL = "http://localhost:8090";
 const offersROUTE = "/Offers/GetOffers";
 
-var baseDate = "07/01/2022";
+var baseDate = "07/02/2022";
+var baseDate2 = "07/09/2022";
+
 const searchParams = new URLSearchParams(window.location.search);
 
 
@@ -143,7 +145,7 @@ export class CheckOfferForDestination extends Component {
                     <Form
                         onSubmit={this.handleSubmit.bind(this)}
                         initialValues={{
-                            when: "07/01/2022 - 07/01/2022",
+                            when: baseDate + " - " + baseDate2,
                             departure: "gdziekolwiek",
                             destination: searchParams.get("destination"),
                             adults: "1",
