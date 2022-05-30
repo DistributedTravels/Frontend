@@ -14,6 +14,9 @@ import { ReservationError } from "./components/ReservationError";
 import { PaymentInformation } from "./components/PaymentInformation";
 import { LoginInformation } from "./components/LoginInformation";
 import { MyAccount } from "./components/MyAccount";
+import Chat from "./components/Chat";
+import ChatWindow from "./components/ChatWindow";
+import Message from "./components/Message";
 import './custom.css'
 
 
@@ -36,6 +39,9 @@ export default class App extends Component {
             <Route path="/paymentInformation" component={PaymentInformation} />
             <Route path="/loginInformation" component={LoginInformation} />
             <Route path="/myAccount" component={MyAccount} />
+            <Route path="/chat" component={Chat} />
+            <Route path="/myAccount" component={ChatWindow} />
+            <Route path="/myAccount" component={Message} />
       </Layout>
     );
   }

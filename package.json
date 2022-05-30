@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@microsoft/signalr": "^6.0.5",
     "@progress/kendo-licensing": "^1.2.2",
     "@progress/kendo-react-form": "^5.2.0",
     "@progress/kendo-react-inputs": "^5.2.0",
