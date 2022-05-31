@@ -4,10 +4,12 @@ import { HubConnectionBuilder } from '@microsoft/signalr';
 import ChatWindow from './ChatWindow';
 
 
-const Chat = () => {
+const Chat = (param) => {
     const [connection, setConnection] = useState(null);
     const [chat, setChat] = useState([]);
     const latestChat = useRef(null);
+    const [destination, setDestination] = useState(null);
+    const [hotelName, setHotel] = useState(null);
 
     latestChat.current = chat;
 
@@ -26,42 +28,52 @@ const Chat = () => {
                 .then(result => {
                     console.log('Connected!');
 
+                    console.log(param.param.destination);
+                    console.log(param.param.hotelName);
+
                     connection.on('EventMessage', message => {
                         console.log('Message: ', message);
                         const updatedChat = [...latestChat.current];
                         updatedChat.push(message);
 
-                        setChat(updatedChat);
+                        setDestination(message.destination)
+                        setHotel(message.hotelName);
+
+                        if (param.param.hotelName === message.hotelName && param.param.destination === message.destination) {
+                            setChat(updatedChat);
+                        }
+                        
                     });
                 })
                 .catch(e => console.log('Connection failed: ', e));
         }
     }, [connection]);
 
-    const sendMessage = async (user, message) => {
-        const chatMessage = {
-            user: user,
-            message: message
-        };
 
-        if (connection.connectionStarted) {
-            try {
-                await connection.send('SendMessage', chatMessage);
-            }
-            catch (e) {
-                console.log(e);
-            }
-        }
-        else {
-            alert('No connection to server yet.');
-        }
-    }
+    //const sendMessage = async (user, message) => {
+    //    const chatMessage = {
+    //        user: user,
+    //        message: message
+    //    };
+
+    //    if (connection.connectionStarted) {
+    //        try {
+    //            await connection.send('SendMessage', chatMessage);
+    //        }
+    //        catch (e) {
+    //            console.log(e);
+    //        }
+    //    }
+    //    else {
+    //        alert('No connection to server yet.');
+    //    }
+    //}
 
     return (
         <div>
           
             <hr />
-            <ChatWindow chat={chat} />
+                <ChatWindow chat={chat} /> 
         </div>
     );
 };

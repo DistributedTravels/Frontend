@@ -40,8 +40,8 @@ export default class App extends Component {
             <Route path="/loginInformation" component={LoginInformation} />
             <Route path="/myAccount" component={MyAccount} />
             <Route path="/chat" component={Chat} />
-            <Route path="/myAccount" component={ChatWindow} />
-            <Route path="/myAccount" component={Message} />
+            <Route path="/chatWindow" component={ChatWindow} />
+            <Route path="/message" component={Message} />
       </Layout>
     );
   }
