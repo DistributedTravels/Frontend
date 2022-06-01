@@ -296,7 +296,7 @@ export class Reservation extends Component {
                 </div>
                 <div class="column2" >
                     <div className="border list-group-item mt-1 offer h5">
-                            <h1> Polecane </h1>
+                            <h3> Polecane </h3>
                             <Chat param={this.state} />
                     </div>
                 </div>

@@ -41,7 +41,8 @@ export class Payment extends Component {
         CVV: "",
         expDate: "",
         paymentSucceeded: false,
-        postId: ""
+        postId: "",
+        attempt: "1"
         
     }
 
@@ -83,6 +84,7 @@ export class Payment extends Component {
             price: searchParams.get("price"),
             promotionCode: searchParams.get("promotionCode"),
             postId: searchParams.get("postId"),
+            attempt: searchParams.get("attempt")
         });
     }
 
@@ -127,9 +129,13 @@ export class Payment extends Component {
         const resp = await response.json();
       
         const parameters = {
-            postId: this.state.postId
+            postId: this.state.postId,
+            price: this.state.price,
+            promotionCode: this.state.promotionCode,
+            attempt: this.state.attempt
             
         }
+
         const myUrlWithParams = new URLSearchParams(parameters);
         console.log(parameters);
 
@@ -146,7 +152,8 @@ export class Payment extends Component {
 
         return (
             <div className="border list-group-item mt-1 offer h5">
-                <h1>Zapłać</h1>
+                {this.state.attempt === "1" ? <h1>Zapłać</h1> :
+                    <h1>Płatność nie powiodła się. Ponów próbę płatności</h1>   }
                 <h3>Cena regularna: {this.state.price}</h3>
                 <h3>
                     Cena promocyjna: {this.state.promotionPrice}

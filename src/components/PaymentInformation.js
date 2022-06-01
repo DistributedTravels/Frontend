@@ -30,8 +30,6 @@ export class PaymentInformation extends React.Component {
         //transport: "",
         //breakfast: "",
         //wifi: "",
-        //price: "",
-        //promotionCode: "",
         paymentSucceeded: "",
         postId: ""
 
@@ -51,6 +49,20 @@ export class PaymentInformation extends React.Component {
                     this.setState({ paymentSucceeded: res.data.reservationStatus })
                     
                 })
+
+            if (this.state.paymentSucceeded === 1) {
+                const parameters = {
+                    postId: searchParams.get("postId"),
+                    price: searchParams.get("price"),
+                    promotionCode: searchParams.get("promotionCode"),
+                    attempt: searchParams.get("attempt") + 1
+                }
+
+                const myRedirectUrlWithParams = new URLSearchParams(parameters);
+
+                window.location.href = "/payment?" + myRedirectUrlWithParams;
+            }
+
         } catch (e) {
             console.log(e);
         }

@@ -17,6 +17,9 @@ import 'bootstrap-daterangepicker/daterangepicker.css';
 
 import axios from 'axios';
 
+import ChatForDestinations from './ChatForDestinations';
+import ChatForOffers from './ChatForOffers';
+
 const webAPI_URL = "http://localhost:8090";
 const offersROUTE = "/Offers/GetOffers";
 
@@ -122,87 +125,106 @@ export class SearchingForm extends Component {
     render() {
 
         return (
-            <div>
-                <div className="border list-group-item mt-1 offer h5">
-                    <Form
-                        onSubmit={this.handleSubmit.bind(this)}
-                        initialValues={{
-                            when: baseDate + " - " + baseDate2,
-                            departure: "Warszawa",
-                            destination: "gdziekolwiek",
-                            adults: "0",
-                            children_under_3: "0",
-                            children_under_10: "0",
-                            children_under_18: "0"
+            <div class="row">
+                <div class="col1">
+                    <div className="border list-group-item mt-1 offer h5">
+                        <Form
+                            onSubmit={this.handleSubmit.bind(this)}
+                            initialValues={{
+                                when: baseDate + " - " + baseDate2,
+                                departure: "Warszawa",
+                                destination: "gdziekolwiek",
+                                adults: "0",
+                                children_under_3: "0",
+                                children_under_10: "0",
+                                children_under_18: "0"
 
-                        }}
-                        render={(formRenderProps) => (
-                            <form onSubmit={formRenderProps.onSubmit}>
+                            }}
+                            render={(formRenderProps) => (
+                                <form onSubmit={formRenderProps.onSubmit}>
 
-                                <Field
-                                    label="Miejsce docelowe"
-                                    name="destination"
-                                    component={DropDown}
-                                    options={destination_dataset} />
+                                    <Field
+                                        label="Miejsce docelowe"
+                                        name="destination"
+                                        component={DropDown}
+                                        options={destination_dataset} />
 
-                                <Field
-                                    label="Miejsce wyjazdu"
-                                    name="departure"
-                                    component={DropDown}
-                                    options={departure_dataset} />
+                                    <Field
+                                        label="Miejsce wyjazdu"
+                                        name="departure"
+                                        component={DropDown}
+                                        options={departure_dataset} />
 
-                                <Field
-                                    label="Termin"
-                                    name="when"
-                                    component={DateInput} />
+                                    <Field
+                                        label="Termin"
+                                        name="when"
+                                        component={DateInput} />
 
-                                <Field
-                                    label="Liczba osób dorosłych"
-                                    name="adults"
-                                    fieldType="number"
-                                    minValue="1"
-                                    maxValue="5"
-                                    component={NumberInputAdults} />
+                                    <Field
+                                        label="Liczba osób dorosłych"
+                                        name="adults"
+                                        fieldType="number"
+                                        minValue="1"
+                                        maxValue="5"
+                                        component={NumberInputAdults} />
 
-                                <Field
-                                    label="Liczba dzieci w wieku do 3 lat"
-                                    name="children_under_3"
-                                    fieldType="number"
-                                    minValue="0"
-                                    maxValue="3"
-                                    component={NumberInputChildren} />
+                                    <Field
+                                        label="Liczba dzieci w wieku do 3 lat"
+                                        name="children_under_3"
+                                        fieldType="number"
+                                        minValue="0"
+                                        maxValue="3"
+                                        component={NumberInputChildren} />
 
-                                <Field
-                                    label="Liczba dzieci w wieku do 10 lat"
-                                    name="children_under_10"
-                                    fieldType="number"
-                                    minValue="0"
-                                    maxValue="3"
-                                    component={NumberInputChildren} />
+                                    <Field
+                                        label="Liczba dzieci w wieku do 10 lat"
+                                        name="children_under_10"
+                                        fieldType="number"
+                                        minValue="0"
+                                        maxValue="3"
+                                        component={NumberInputChildren} />
 
-                                <Field
-                                    label="Liczba dzieci w wieku do 18 lat"
-                                    name="children_under_18"
-                                    fieldType="number"
-                                    minValue="0"
-                                    maxValue="3"
-                                    component={NumberInputChildren} />
+                                    <Field
+                                        label="Liczba dzieci w wieku do 18 lat"
+                                        name="children_under_18"
+                                        fieldType="number"
+                                        minValue="0"
+                                        maxValue="3"
+                                        component={NumberInputChildren} />
 
-                                <p>
+                                    <p>
 
-                                </p>
+                                    </p>
 
-                                <input type="submit" value="Szukaj" />
+                                    <input type="submit" value="Szukaj" />
 
 
-                            </form>
-                        )}>
-                    </Form>
+                                </form>
+                            )}>
+                        </Form>
+                    </div>
+                    <div>
+                        {<Offer param={this.state.searchingParam} />}
+
+                    </div>
                 </div>
-                <div>
-                    {<Offer param={this.state.searchingParam} />}
+                <div class="col2" >
+                    <div className="border list-group-item mt-1 offer h5">
+                        
+                        <h3>TOP 3 kierunki </h3>
+                        <ChatForDestinations/>
+                    </div>
+                </div>            
+                      
+                <div class="col3">
+                    <div className="border list-group-item mt-1 offer h5">
 
+                        <h3>TOP 3 oferty </h3>
+                        <ChatForOffers />
+                    </div>
+                            
                 </div>
+                  
             </div>
 
 

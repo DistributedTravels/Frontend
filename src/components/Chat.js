@@ -34,6 +34,7 @@ const Chat = (param) => {
                     connection.on('EventMessage', message => {
                         console.log('Message: ', message);
                         const updatedChat = [...latestChat.current];
+                        
                         updatedChat.push(message);
 
                         setDestination(message.destination)

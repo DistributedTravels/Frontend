@@ -64,6 +64,9 @@ export class NavMenu extends Component {
                 <NavItem>
                     <NavLink tag={Link} className="text-dark" to="/destinations">Kierunki podróży</NavLink>
                 </NavItem>
+                <NavItem>
+                    <NavLink tag={Link} className="text-dark" to="/changes">Zmiany</NavLink>
+                </NavItem>
 
                 {sessionStorage.getItem('user-key') ?
                     <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>

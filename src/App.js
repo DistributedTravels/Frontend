@@ -17,6 +17,13 @@ import { MyAccount } from "./components/MyAccount";
 import Chat from "./components/Chat";
 import ChatWindow from "./components/ChatWindow";
 import Message from "./components/Message";
+import { Changes } from "./components/Changes";
+import ChatForDestinations from "./components/ChatForDestinations";
+import ChatWindowForDestinations from "./components/ChatWindowForDestinations";
+import MessageForDestinations from "./components/MessageForDestinations";
+import ChatForOffers from "./components/ChatForOffers";
+import ChatWindowForOffers from "./components/ChatWindowForOffers";
+import MessageForOffers from "./components/MessageForOffers";
 import './custom.css'
 
 
@@ -42,6 +49,13 @@ export default class App extends Component {
             <Route path="/chat" component={Chat} />
             <Route path="/chatWindow" component={ChatWindow} />
             <Route path="/message" component={Message} />
+            <Route path="/changes" component={Changes} />
+            <Route path="/chatForDestinations" component={ChatForDestinations} />
+            <Route path="/chatWindowForDestinations" component={ChatWindowForDestinations} />
+            <Route path="/messageForDestinations" component={MessageForDestinations} />
+            <Route path="/chatForOffers" component={ChatForOffers} />
+            <Route path="/chatWindowForOffers" component={ChatWindowForOffers} />
+            <Route path="/messageForOffers" component={MessageForOffers} />
       </Layout>
     );
   }

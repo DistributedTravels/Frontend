@@ -42,7 +42,8 @@ export class ReservationError extends Component
                 const parameters = {
                     postId: searchParams.get("postId"),
                     price: searchParams.get("price"),
-                    promotionCode: searchParams.get("promotionCode")
+                    promotionCode: searchParams.get("promotionCode"),
+                    attempt: "1"
                 }
 
                 const myRedirectUrlWithParams = new URLSearchParams(parameters);

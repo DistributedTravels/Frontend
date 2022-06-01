@@ -60,6 +60,22 @@ border-width: 1px;
     padding: 10px;
    
 }
+.col1 {
+    float: left;
+    width: 40%;
+    padding: 10px;
+}
+
+.col2 {
+    float: left;
+    width: 30%;
+    padding: 10px;
+}
+.col3 {
+    float: left;
+    width: 30%;
+    padding: 10px;
+}
 
 /* Clear floats after the columns */
 .row:after {
