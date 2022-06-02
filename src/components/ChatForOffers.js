@@ -5,7 +5,7 @@ import ChatWindowForOffers from './ChatWindowForOffers';
 
 import axios from 'axios';
 const webAPI_URL = "http://localhost:8090";
-const destinationROUTE = "/Reservation/TopDestinations";
+const destinationROUTE = "/Reservation/TopOffers";
 
 const ChatForOffers = () => {
     const [connection, setConnection] = useState(null);
@@ -21,8 +21,10 @@ const ChatForOffers = () => {
             .then(res => {
                 const updatedChat = [...latestChat.current];
 
+                console.log(res.data);
+
                 if (updatedChat.length > 0) {
-                    updatedChat.pop(res.data);
+                    updatedChat.pop();
                 }
                 updatedChat.push(res.data);
 
@@ -45,12 +47,13 @@ const ChatForOffers = () => {
                 .then(result => {
                     console.log('Connected!');
 
-                    connection.on('TopDestinationsMessage', message => {
+                    connection.on('TopOffersMessage', message => {
                         console.log('Message: ', message);
                         const updatedChat = [...latestChat.current];
 
+                       
                         if (updatedChat.length > 0) {
-                            updatedChat.pop(message);
+                            updatedChat.pop();
                         }
                         updatedChat.push(message);
 

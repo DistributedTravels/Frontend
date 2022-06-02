@@ -35,7 +35,7 @@ export class SearchingForm extends Component {
     state = {
         showOffers: false,
         searchingParam: {
-            when: baseDate + "-" + baseDate,
+            when: baseDate + "-" + baseDate2,
             departure: "Warszawa",
             destination: "gdziekolwiek",
             adults: "1",
@@ -210,20 +210,19 @@ export class SearchingForm extends Component {
                 </div>
                 <div class="col2" >
                     <div className="border list-group-item mt-1 offer h5">
-                        
+                        <div class="row">
                         <h3>TOP 3 kierunki </h3>
-                        <ChatForDestinations/>
+                            <ChatForDestinations />
+                        </div>
+                        <div class="row">
+                            <h3>TOP 3 oferty </h3>
+                            <ChatForOffers />
+                            
+                        </div>
                     </div>
                 </div>            
                       
-                <div class="col3">
-                    <div className="border list-group-item mt-1 offer h5">
-
-                        <h3>TOP 3 oferty </h3>
-                        <ChatForOffers />
-                    </div>
-                            
-                </div>
+                
                   
             </div>
 

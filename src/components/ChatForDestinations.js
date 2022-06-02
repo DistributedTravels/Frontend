@@ -22,9 +22,11 @@ const ChatForDestinations = () => {
                 const updatedChat = [...latestChat.current];
 
                 if (updatedChat.length > 0) {
-                    updatedChat.pop(res.data);
+                    updatedChat.pop();
                 }
                 updatedChat.push(res.data);
+
+                console.log(res.data);
 
                 setChat(updatedChat);
 
@@ -50,10 +52,10 @@ const ChatForDestinations = () => {
                         const updatedChat = [...latestChat.current];
 
                         if (updatedChat.length > 0) {
-                            updatedChat.pop(message);
+                            updatedChat.pop();
                         }
                         updatedChat.push(message);
-                        
+
                         setChat(updatedChat);
                         
 
