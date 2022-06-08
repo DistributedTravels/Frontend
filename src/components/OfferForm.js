@@ -3,8 +3,6 @@ import { Form, Field } from "@progress/kendo-react-form";
 import { NumberInput } from './formComponents'
 import { DropDown } from './formComponents'
 
-import transport from "./transport";
-import checkbox from "./checkbox";
 
 const searchParams = new URLSearchParams(window.location.search);
 
@@ -27,7 +25,11 @@ export class OfferForm extends Component {
         offerId: "",
         hotelName: "",
         hotelId: "",
-        transportId: ""
+        transportId: "",
+        wifiList: [],
+        breakfastList: [],
+        transportList: []
+
 
     }
 
@@ -46,6 +48,37 @@ export class OfferForm extends Component {
             hotelId: searchParams.get("hotelId"),
             transportId: searchParams.get("transportId")
         });
+
+        if (searchParams.get("wifiAvailable") === "true") {
+            this.setState({
+                wifiList: ["Nie", "Tak"]
+            })
+        }
+        else {
+            this.setState({
+                wifiList: ["Nie"]
+            })
+        }
+        if (searchParams.get("breakfastAvailable") === "true") {
+            this.setState({
+                breakfastList: ["Nie", "Tak"]
+            })
+        }
+        else {
+            this.setState({
+                breakfastList: ["Nie"]
+            })
+        }
+        if (searchParams.get("planeAvailable") === "true") {
+            this.setState({
+                transportList: ["Dojazd własny", "Samolot"]
+            })
+        }
+        else {
+            this.setState({
+                transportList: ["Dojazd własny"]
+            })
+        }
     }
     
 
@@ -133,17 +166,17 @@ export class OfferForm extends Component {
                                         label="Śniadanie"
                                         name="breakfast"
                                         component={DropDown}
-                                        options={checkbox} />
+                                        options={this.state.breakfastList} />
                                     <Field
                                         label="Wifi"
                                         name="wifi"
                                         component={DropDown}
-                                        options={checkbox} />
+                                        options={this.state.wifiList} />
                                     <Field
                                         label="Transport"
                                         name="transport"
                                         component={DropDown}
-                                        options={transport} />
+                                        options={this.state.transportList} />
 
                                     <p>
 

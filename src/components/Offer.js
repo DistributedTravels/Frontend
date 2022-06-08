@@ -71,7 +71,10 @@ export class Offer extends React.Component {
             adults: this.state.adults,
             children_under_3: this.state.children_under_3,
             children_under_10: this.state.children_under_10,
-            children_under_18: this.state.children_under_18
+            children_under_18: this.state.children_under_18,
+            wifiAvailable: offer.wifiAvailable,
+            breakfastAvailable: offer.breakfastAvailable,
+            planeAvailable: offer.planeAvailable
 
         }
 
