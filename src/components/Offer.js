@@ -1,6 +1,9 @@
 ﻿import React, { Component } from 'react';
 import { Form, Field, FormElement } from "@progress/kendo-react-form";
 import { Input } from "@progress/kendo-react-inputs";
+
+import ChatForPrice from './ChatForPrice';
+
 const webAPI_URL = "http://localhost:8090";
 
 
@@ -22,8 +25,6 @@ export class Offer extends React.Component {
             children_under_18: "0",
             offers: [],
             beforeSearch: true
-
-
         };
     }
 
@@ -84,6 +85,7 @@ export class Offer extends React.Component {
 
         if (!equals(this.state.offers, []) && !this.state.beforeSearch) {
 
+
             return (
                 <div className="border list-group-item mt-1 offer h5">
                     <h3 className="text-center mt-5">Wyniki wyszukiwania</h3>
@@ -102,6 +104,16 @@ export class Offer extends React.Component {
                                             <h5>{offer.destination}</h5>
                                             <h5>Data: {date}</h5>
                                             <h5>Czas wyjazdu: {time}</h5>
+                                            <ChatForPrice param={offer} />
+                                            <p>
+                                            </p>
+                                            <h5> W ofercie dostępne: </h5>
+                                            <ul>
+                                                {offer.wifiAvailable ? <li><h5> Wifi </h5></li> : null}
+                                                {offer.breakfastAvailable ? <li><h5> Śniadanie </h5></li> : null}
+                                                {offer.planeAvailable ? <li><h5> Samolot </h5></li> : null}
+                                            </ul>
+                                            
                                             <button className="search" onClick={this.handleClick(offer)}>Sprawdź ofertę</button>
 
                                         </li>

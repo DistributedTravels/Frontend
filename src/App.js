@@ -24,6 +24,9 @@ import MessageForDestinations from "./components/MessageForDestinations";
 import ChatForOffers from "./components/ChatForOffers";
 import ChatWindowForOffers from "./components/ChatWindowForOffers";
 import MessageForOffers from "./components/MessageForOffers";
+import ChatForChanges from "./components/ChatForChanges";
+import ChatWindowForChanges from "./components/ChatWindowForChanges";
+import MessageForChanges from "./components/MessageForChanges";
 import './custom.css'
 
 
@@ -56,6 +59,9 @@ export default class App extends Component {
             <Route path="/chatForOffers" component={ChatForOffers} />
             <Route path="/chatWindowForOffers" component={ChatWindowForOffers} />
             <Route path="/messageForOffers" component={MessageForOffers} />
+            <Route path="/chatForChanges" component={ChatForChanges} />
+            <Route path="/chatWindowForChanges" component={ChatWindowForChanges} />
+            <Route path="/messageForChanges" component={MessageForChanges} />
       </Layout>
     );
   }

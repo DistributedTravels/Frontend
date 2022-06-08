@@ -144,7 +144,7 @@ export class CheckOfferForDestination extends Component {
 
         return (
             <div class="row">
-                <div class="col1">
+                <div class="column1">
                     <div className="border list-group-item mt-1 offer h5">
                         <Form
                             onSubmit={this.handleSubmit.bind(this)}
@@ -226,7 +226,7 @@ export class CheckOfferForDestination extends Component {
 
                     </div>
                 </div>
-                <div class="col2" >
+                <div class="column2" >
                     <div className="border list-group-item mt-1 offer h5">
                         <div class="row">
                             <h3>TOP 3 kierunki </h3>

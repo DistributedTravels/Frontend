@@ -1,19 +1,33 @@
 ﻿import React, { useState, useEffect, useRef } from 'react';
 import { HubConnectionBuilder } from '@microsoft/signalr';
 
-import ChatWindow from './ChatWindow';
+import ChatWindowForPrice from './ChatWindowForPrice';
 
+import axios from 'axios';
+const webAPI_URL = "http://localhost:8090";
+const changesROUTE = "/Offers/GetLastChanges";
 
-const Chat = (param) => {
+const ChatForPrice = (param) => {
     const [connection, setConnection] = useState(null);
     const [chat, setChat] = useState([]);
     const latestChat = useRef(null);
-    const [destination, setDestination] = useState(null);
-    const [hotelName, setHotel] = useState(null);
+    
 
     latestChat.current = chat;
 
     useEffect(() => {
+
+        const updatedChat = [...latestChat.current];
+
+        console.log(param.param);
+
+        if (updatedChat.length > 0) {
+            updatedChat.pop();
+        }
+        updatedChat.push(param.param);
+
+        setChat(updatedChat);
+
         const newConnection = new HubConnectionBuilder()
             .withUrl('http://localhost:8090/hubs/events')
             .withAutomaticReconnect()
@@ -28,22 +42,20 @@ const Chat = (param) => {
                 .then(result => {
                     console.log('Connected!');
 
-                    console.log(param.param.destination);
-                    console.log(param.param.hotelName);
-
-                    connection.on('EventMessage', message => {
+                    connection.on('OfferChanged', message => {
                         console.log('Message: ', message);
                         const updatedChat = [...latestChat.current];
-                        
-                        updatedChat.push(message);
 
-                        setDestination(message.destination)
-                        setHotel(message.hotelName);
+                        if (updatedChat.length > 0) {
+                            updatedChat.pop();
+                        }
+                        updatedChat.push(message.newOffer);
 
-                        if (param.param.hotelName === message.hotelName && param.param.destination === message.destination) {
+                        if (param.param.hotelName === message.newOffer.hotelName && param.param.destination === message.newOffer.destination) {
                             setChat(updatedChat);
                         }
-                        
+
+
                     });
                 })
                 .catch(e => console.log('Connection failed: ', e));
@@ -51,13 +63,14 @@ const Chat = (param) => {
     }, [connection]);
 
 
+
     return (
         <div>
-          
+
             <hr />
-                <ChatWindow chat={chat} /> 
+            <ChatWindowForPrice chat={chat} />
         </div>
     );
 };
 
-export default Chat;
+export default ChatForPrice;
