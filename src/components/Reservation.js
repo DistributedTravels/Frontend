@@ -153,7 +153,7 @@ export class Reservation extends Component {
                     children_under_10: this.state.children_under_10,
                     children_under_18: this.state.children_under_18,
                     number_of_2_room: this.state.number_of_2_room,
-                    number_of_apartaments: this.state.number_of_apartaments,
+                    number_of_apartments: this.state.number_of_apartaments,
                     transport: this.state.transport,
                     breakfast: this.state.breakfast,
                     wifi: this.state.wifi,
@@ -287,8 +287,6 @@ export class Reservation extends Component {
 
                     </p>
                     <div className="border list-group-item mt-1 offer h5">
-                        
-                        
                         {button}
                     </div>
                 
