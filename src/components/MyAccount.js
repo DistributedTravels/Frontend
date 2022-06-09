@@ -1,6 +1,8 @@
 ﻿import React, { Component } from 'react';
 import axios from 'axios';
 
+import ChatForAccount from './ChatForAccount';
+
 const webAPI_URL = "http://localhost:8090";
 const myAccountROUTE = "/Reservation/GetReservations";
 
@@ -64,7 +66,9 @@ export class MyAccount extends React.Component {
                                             <h5>Liczba dzieci w wieku do 10 lat: {reservation.childrenUnder10}</h5>
                                             <h5>Liczba dzieci w wieku do 18 lat: {reservation.childrenUnder18}</h5>
                                             <h5>Liczba pokojów 2-osobowych: {reservation.smallRooms}</h5>
-                                            <h5>Liczba apartmarntów: {reservation.bigRooms}</h5>
+                                            <h5>Liczba apartamentów: {reservation.bigRooms}</h5>
+                                            <h5>Status: {reservation.status}</h5>
+                                            <ChatForAccount param={reservation}/>
                                             
                                         </li>
                                     )

@@ -3,6 +3,8 @@
 import { Form, Field, FormElement } from "@progress/kendo-react-form";
 
 import { Input } from "@progress/kendo-react-inputs";
+import ChatForPayment from './ChatForPayment';
+
 const webAPI_URL = "http://localhost:8090";
 const paymentROUTE = "/Payment/SendInformation";
 
@@ -42,7 +44,8 @@ export class Payment extends Component {
         expDate: "",
         paymentSucceeded: false,
         postId: "",
-        attempt: "1"
+        attempt: "1",
+        offerAvailable: true
         
     }
 
@@ -153,11 +156,8 @@ export class Payment extends Component {
         return (
             <div className="border list-group-item mt-1 offer h5">
                 {this.state.attempt === "1" ? <h1>Zapłać</h1> :
-                    <h1>Płatność nie powiodła się. Ponów próbę płatności</h1>   }
-                <h3>Cena regularna: {this.state.price}</h3>
-                <h3>
-                    Cena promocyjna: {this.state.promotionPrice}
-                </h3>
+                    <h1>Płatność nie powiodła się. Ponów próbę płatności</h1>}
+                <ChatForPayment param={ this.state}/>
                 <p>
 
                 </p>

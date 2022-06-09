@@ -27,6 +27,15 @@ import MessageForOffers from "./components/MessageForOffers";
 import ChatForChanges from "./components/ChatForChanges";
 import ChatWindowForChanges from "./components/ChatWindowForChanges";
 import MessageForChanges from "./components/MessageForChanges";
+import ChatForPrice from "./components/ChatForPrice";
+import ChatWindowForPrice from "./components/ChatWindowForPrice";
+import MessageForPrice from "./components/MessageForPrice";
+import ChatForReservation from "./components/ChatForReservation";
+import ChatWindowForReservation from "./components/ChatWindowForReservation";
+import MessageForReservation from "./components/MessageForReservation";
+import ChatForAccount from "./components/ChatForAccount";
+import ChatWindowForAccount from "./components/ChatWindowForAccount";
+import MessageForAccount from "./components/MessageForAccount";
 import './custom.css'
 
 
@@ -62,6 +71,15 @@ export default class App extends Component {
             <Route path="/chatForChanges" component={ChatForChanges} />
             <Route path="/chatWindowForChanges" component={ChatWindowForChanges} />
             <Route path="/messageForChanges" component={MessageForChanges} />
+            <Route path="/chatForPrice" component={ChatForPrice} />
+            <Route path="/chatWindowForPrice" component={ChatWindowForPrice} />
+            <Route path="/messageForPrice" component={MessageForPrice} />
+            <Route path="/chatForReservation" component={ChatForReservation} />
+            <Route path="/chatWindowForReservation" component={ChatWindowForReservation} />
+            <Route path="/messageForReservation" component={MessageForReservation} />
+            <Route path="/chatForAccount" component={ChatForAccount} />
+            <Route path="/chatWindowForAccount" component={ChatWindowForAccount} />
+            <Route path="/messageForAccount" component={MessageForAccount} />
       </Layout>
     );
   }

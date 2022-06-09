@@ -182,7 +182,7 @@ export class OfferForm extends Component {
 
                                     </p>
 
-                                    <input type="submit" value="Sprawdź dostępność" onClick={this.handleSubmit} />
+                                    <input type="submit" value="Sprawdź ofertę" onClick={this.handleSubmit} />
 
                                 </form>
                             )}>

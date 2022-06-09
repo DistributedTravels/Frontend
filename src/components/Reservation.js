@@ -6,6 +6,8 @@ import Chat from './Chat';
 
 import axios from 'axios';
 
+import ChatForReservation from './ChatForReservation';
+
 const webAPI_URL = "http://localhost:8090";
 const offersAvailableROUTE = "/Offers/CheckOfferAvailability";
 const reserveROUTE = "/Reservation/Reserve";
@@ -38,7 +40,7 @@ export class Reservation extends Component {
         breakfast: "",
         wifi: "",
         offerAvailable : true,
-        price: "niedostępna",
+        hotelPrice: "niedostępna",
         promotionCode: "brak kodu rabatowego",
         showCode: false,
         postId: "",
@@ -65,7 +67,7 @@ export class Reservation extends Component {
             transport: searchParams.get("transport"),
             breakfast: searchParams.get("breakfast"),
             wifi: searchParams.get("wifi"),
-            price: "niedostępna"
+            hotelPrice: "niedostępna"
         });
 
         const myUrlWithParams = new URL(webAPI_URL + offersAvailableROUTE);
@@ -95,7 +97,7 @@ export class Reservation extends Component {
             .then(res => {
                 this.setState({
                     offerAvailable: res.data.answer,
-                    price: res.data.price
+                    hotelPrice: res.data.price
                 });
 
             })
@@ -171,7 +173,7 @@ export class Reservation extends Component {
             const parameters = {
                 postId: id,
                 promotionCode: this.state.promotionCode,
-                price: this.state.price
+                price: this.state.hotelPrice
             }
             const myUrlWithParams = new URLSearchParams(parameters);
             console.log(parameters);
@@ -182,7 +184,7 @@ export class Reservation extends Component {
             const parameters = {
                 postId: null,
                 promotionCode: this.state.promotionCode,
-                price: this.state.price
+                price: this.state.hotelPrice
             }
             const myUrlWithParams = new URLSearchParams(parameters);
             console.log(parameters);
@@ -200,7 +202,7 @@ export class Reservation extends Component {
         if (this.state.offerAvailable) {
             information = <h5 style={{ color: 'green' }}> Oferta dostępna </h5>
             button = <button className="reserve" onClick={this.handleClick}>Rezerwuj</button>
-            priceInformation = <h3>Cena: {this.state.price} PLN</h3>
+            priceInformation = <h3>Cena: {this.state.hotelPrice} PLN</h3>
             codeButton = <button type={"submit"} className="reserve">Wykorzystaj kod </button>
         } else {
             button = <button className="Disabled">Rezerwuj</button>
@@ -236,7 +238,7 @@ export class Reservation extends Component {
                         <p>
 
                         </p>
-                        {priceInformation}
+                            <ChatForReservation param={this.state} />
                     </div>
                     <p>
 
@@ -285,10 +287,8 @@ export class Reservation extends Component {
 
                     </p>
                     <div className="border list-group-item mt-1 offer h5">
-                        {information}
-                        <p>
-
-                        </p>
+                        
+                        
                         {button}
                     </div>
                 
