@@ -105,7 +105,9 @@ export class Offer extends React.Component {
                                         <li key={offer.id} className="border list-group-item mt-5 offer">
                                             <h4>{offer.hotelName}</h4>
                                             <h5>{offer.destination}</h5>
-                                            <h5>Data: {date}</h5>
+                                            <h5>Liczba wolnych pokojów 2-osobowych: {offer.smallRoomsAvailable}</h5>
+                                            <h5>Liczba wolnych apartamentów: {offer.bigRoomsAvailable}</h5>
+                                            <h5>Data wyjazdu: {date}</h5>
                                             <h5>Czas wyjazdu: {time}</h5>
                                             <ChatForPrice param={offer} />
                                             <p>

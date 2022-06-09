@@ -67,6 +67,7 @@ export class MyAccount extends React.Component {
                                             <h5>Liczba dzieci w wieku do 18 lat: {reservation.childrenUnder18}</h5>
                                             <h5>Liczba pokojów 2-osobowych: {reservation.smallRooms}</h5>
                                             <h5>Liczba apartamentów: {reservation.bigRooms}</h5>
+                                            {reservation.hasOwnTransport ? <h5>Transport: Dojazd własny</h5> : <h5>Transport: Samolot</h5>}
                                             <h5>Status: {reservation.status}</h5>
                                             <ChatForAccount param={reservation}/>
                                             

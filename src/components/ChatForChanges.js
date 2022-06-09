@@ -47,7 +47,7 @@ const ChatForChanges = () => {
                 .then(result => {
                     console.log('Connected!');
 
-                    connection.on('TopDestinationsMessage', message => {
+                    connection.on('TopChanges', message => {
                         console.log('Message: ', message);
                         const updatedChat = [...latestChat.current];
 
