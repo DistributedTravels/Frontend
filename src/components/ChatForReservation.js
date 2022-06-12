@@ -44,9 +44,7 @@ const ChatForReservation = (param) => {
                 console.log(res.data);
 
                 setChat(updatedChat);
-
             })
-
 
         const newConnection = new HubConnectionBuilder()
             .withUrl('http://localhost:8090/hubs/events')
@@ -86,19 +84,14 @@ const ChatForReservation = (param) => {
                         if (param.param.hotelName === message.newOffer.hotelName && param.param.destination === message.newOffer.destination) {
                             setChat(updatedChat);
                         }
-
-
                     });
                 })
                 .catch(e => console.log('Connection failed: ', e));
         }
     }, [connection]);
 
-
-
     return (
         <div>
-
             <hr />
             <ChatWindowForReservation  chat={chat} />
         </div>

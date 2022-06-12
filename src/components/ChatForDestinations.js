@@ -1,9 +1,8 @@
 ﻿import React, { useState, useEffect, useRef } from 'react';
 import { HubConnectionBuilder } from '@microsoft/signalr';
-
 import ChatWindowForDestinations from './ChatWindowForDestinations';
-
 import axios from 'axios';
+
 const webAPI_URL = "http://localhost:8090";
 const destinationROUTE = "/Reservation/TopDestinations";
 
@@ -15,7 +14,6 @@ const ChatForDestinations = () => {
     latestChat.current = chat;
 
     useEffect(() => {
-
         const myUrlWithParams = new URL(webAPI_URL + destinationROUTE);
         axios.get(myUrlWithParams.href)
             .then(res => {
@@ -29,10 +27,7 @@ const ChatForDestinations = () => {
                 console.log(res.data);
 
                 setChat(updatedChat);
-
             })
-
-
         const newConnection = new HubConnectionBuilder()
             .withUrl('http://localhost:8090/hubs/events')
             .withAutomaticReconnect()
@@ -55,21 +50,15 @@ const ChatForDestinations = () => {
                             updatedChat.pop();
                         }
                         updatedChat.push(message);
-
                         setChat(updatedChat);
-                        
-
                     });
                 })
                 .catch(e => console.log('Connection failed: ', e));
         }
     }, [connection]);
 
-
-
     return (
         <div>
-
             <hr />
             <ChatWindowForDestinations chat={chat} />
         </div>

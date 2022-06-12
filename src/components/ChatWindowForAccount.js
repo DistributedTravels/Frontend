@@ -1,5 +1,4 @@
 ﻿import React from 'react';
-
 import MessageForAccount from './MessageForAccount';
 
 const ChatWindowForAccount = (props) => {

@@ -1,18 +1,12 @@
 ﻿import React, { useState, useEffect, useRef } from 'react';
 import { HubConnectionBuilder } from '@microsoft/signalr';
-
 import ChatWindowForPrice from './ChatWindowForPrice';
-
-import axios from 'axios';
-const webAPI_URL = "http://localhost:8090";
-const changesROUTE = "/Offers/GetLastChanges";
 
 const ChatForPrice = (param) => {
     const [connection, setConnection] = useState(null);
     const [chat, setChat] = useState([]);
     const latestChat = useRef(null);
     
-
     latestChat.current = chat;
 
     useEffect(() => {
@@ -54,19 +48,14 @@ const ChatForPrice = (param) => {
                         if (param.param.hotelName === message.newOffer.hotelName && param.param.destination === message.newOffer.destination) {
                             setChat(updatedChat);
                         }
-
-
                     });
                 })
                 .catch(e => console.log('Connection failed: ', e));
         }
     }, [connection]);
 
-
-
     return (
         <div>
-
             <hr />
             <ChatWindowForPrice chat={chat} />
         </div>

@@ -1,5 +1,4 @@
 ﻿import React from 'react';
-
 import MessageForDestinations from './MessageForDestinations';
 
 const ChatWindowForDestinations = (props) => {
@@ -9,7 +8,7 @@ const ChatWindowForDestinations = (props) => {
             destination1={m.topDestinations[0]}
             destination2={m.topDestinations[1]}
             destination3={m.topDestinations[2]}
-             />);
+        />);
 
     return (
         <div>

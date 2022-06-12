@@ -1,11 +1,6 @@
 ﻿import React, { useState, useEffect, useRef } from 'react';
 import { HubConnectionBuilder } from '@microsoft/signalr';
-
 import ChatWindowForAccount from './ChatWindowForAccount';
-
-import axios from 'axios';
-const webAPI_URL = "http://localhost:8090";
-const searchParams = new URLSearchParams(window.location.search);
 
 const ChatForAccount = (param) => {
     const [connection, setConnection] = useState(null);
@@ -27,9 +22,7 @@ const ChatForAccount = (param) => {
         }
         
         updatedChat.push(mesObj);
-
         setChat(updatedChat);
-
 
         const newConnection = new HubConnectionBuilder()
             .withUrl('http://localhost:8090/hubs/events')
@@ -70,19 +63,14 @@ const ChatForAccount = (param) => {
                         if (param.param.reservationId === message.newReservation.reservationId ) {
                             setChat(updatedChat);
                         }
-
-
                     });
                 })
                 .catch(e => console.log('Connection failed: ', e));
         }
     }, [connection]);
 
-
-
     return (
         <div>
-
             <hr />
             <ChatWindowForAccount chat={chat} />
         </div>

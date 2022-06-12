@@ -1,18 +1,10 @@
 ﻿import React, { Component } from 'react';
-import { Form, Field, FormElement } from "@progress/kendo-react-form";
-import { Input } from "@progress/kendo-react-inputs";
-
 import ChatForPrice from './ChatForPrice';
 
-const webAPI_URL = "http://localhost:8090";
-
-
 var baseDate = "07/01/2022";
-
 const equals = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 
 export class Offer extends React.Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -38,9 +30,7 @@ export class Offer extends React.Component {
         this.setState({ children_under_18: nextProps.param.children_under_18 })
         this.setState({ offers: nextProps.param.offers })
         this.setState({ beforeSearch: nextProps.param.beforeSearch })
-
     }
-
 
     handleClick = offer => () => {
 
@@ -58,7 +48,6 @@ export class Offer extends React.Component {
             id = offer.offerId;
         }
 
-
         const parameters = {
             offerId: id,
             hotelId: offer.hotelId,
@@ -75,61 +64,49 @@ export class Offer extends React.Component {
             wifiAvailable: offer.wifiAvailable,
             breakfastAvailable: offer.breakfastAvailable,
             planeAvailable: offer.planeAvailable
-
         }
 
         const myUrlWithParams = new URLSearchParams(parameters);
-
         window.location.href = "/offerForm?" + myUrlWithParams;
     };
 
     render() {
-
-
         if (!equals(this.state.offers, []) && !this.state.beforeSearch) {
-
-
             return (
-                <div className="border list-group-item mt-1 offer h5">
-                    <h3 className="text-center mt-5">Wyniki wyszukiwania</h3>
-                    <ul>
-                        {
-                            this.state.offers
-                                .map(offer => {
-                                    const dates = (offer.departureTime).split("T");
-                                    var date = dates[0];
-                                    var time = dates[1].replaceAll("Z", "");
+            <div className="border list-group-item mt-1 offer h5">
+                <h3 className="text-center mt-5">Wyniki wyszukiwania</h3>
+                <ul>
+                {
+                    this.state.offers
+                        .map(offer => {
+                            const dates = (offer.departureTime).split("T");
+                            var date = dates[0];
+                            var time = dates[1].replaceAll("Z", "");
 
-                                    return (
-
-                                        <li key={offer.id} className="border list-group-item mt-5 offer">
-                                            <h4>{offer.hotelName}</h4>
-                                            <h5>{offer.destination}</h5>
-                                            <h5>Data wyjazdu: {date}</h5>
-                                            <h5>Czas wyjazdu: {time}</h5>
-                                            <ChatForPrice param={offer} />
-                                            <p>
-                                            </p>
-                                            {offer.wifiAvailable || offer.breakfastAvailable || offer.planeAvailable ? <h5> W ofercie dostępne: </h5> : null}
-                                            <ul>
-                                                {offer.wifiAvailable ? <li><h5> Wifi </h5></li> : null}
-                                                {offer.breakfastAvailable ? <li><h5> Śniadanie </h5></li> : null}
-                                                {offer.planeAvailable ? <li><h5> Samolot </h5></li> : null}
-                                            </ul>
-                                            
-                                            <button className="search" onClick={this.handleClick(offer)}>Sprawdź ofertę</button>
-
-                                        </li>
-                                    )
-                                })
-                        }
-                    </ul>
-
-                </div>
-
+                        return (
+                            <li key={offer.id} className="border list-group-item mt-5 offer">
+                                <h4>{offer.hotelName}</h4>
+                                <h5>{offer.destination}</h5>
+                                <h5>Data wyjazdu: {date}</h5>
+                                <h5>Czas wyjazdu: {time}</h5>
+                                <ChatForPrice param={offer} />
+                                <p>
+                                </p>
+                                {offer.wifiAvailable || offer.breakfastAvailable || offer.planeAvailable ? <h5> W ofercie dostępne: </h5> : null}
+                                <ul>
+                                    {offer.wifiAvailable ? <li><h5> Wifi </h5></li> : null}
+                                    {offer.breakfastAvailable ? <li><h5> Śniadanie </h5></li> : null}
+                                    {offer.planeAvailable ? <li><h5> Samolot </h5></li> : null}
+                                </ul>
+                                <button className="search" onClick={this.handleClick(offer)}>Sprawdź ofertę</button>
+                            </li>
+                        )
+                        })
+                }
+                </ul>
+            </div>
             )
         }
-
         else if (!this.state.beforeSearch) {
             return (
                 <div className="border list-group-item mt-1 offer h5">
@@ -141,7 +118,6 @@ export class Offer extends React.Component {
         else {
             return (
                 <div >
-
                     <h4 className="text-center mt-5"></h4>
                 </div>
             )

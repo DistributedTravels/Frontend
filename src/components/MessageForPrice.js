@@ -1,7 +1,6 @@
 ﻿import React from 'react';
 
 const MessageForPrice = (props) => (
-
     <div >
         <h5>Liczba wolnych pokojów 2-osobowych: {props.message.smallRoomsAvailable}</h5>
         <h5>Liczba wolnych apartamentów: {props.message.bigRoomsAvailable}</h5>

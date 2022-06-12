@@ -1,5 +1,4 @@
 ﻿import React from 'react';
-
 import MessageForChanges from './MessageForChanges';
 
 const ChatWindowForChanges = (props) => {

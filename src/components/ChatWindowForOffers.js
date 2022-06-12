@@ -1,5 +1,4 @@
 ﻿import React from 'react';
-
 import MessageForOffers from './MessageForOffers';
 
 const ChatWindowForOffers = (props) => {

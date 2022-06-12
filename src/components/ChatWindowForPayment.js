@@ -1,5 +1,4 @@
 ﻿import React from 'react';
-
 import MessageForPayment from './MessageForPayment';
 
 const ChatWindowForPayment = (props) => {

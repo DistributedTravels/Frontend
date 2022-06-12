@@ -1,18 +1,13 @@
 ﻿import React, { Component } from 'react';
-
 import { Form, Field, FormElement } from "@progress/kendo-react-form";
-
 import { Input } from "@progress/kendo-react-inputs";
 import ChatForPayment from './ChatForPayment';
 
 const webAPI_URL = "http://localhost:8090";
 const paymentROUTE = "/Payment/SendInformation";
-
 const searchParams = new URLSearchParams(window.location.search);
 
 export class Payment extends Component {
-
-
     constructor(props) {
         super(props);
     }
@@ -45,14 +40,11 @@ export class Payment extends Component {
         paymentSucceeded: false,
         postId: "",
         attempt: "1",
-        offerAvailable: true
-        
+        offerAvailable: true   
     }
 
     componentDidMount() {
-
         // GET promotionPrice
-
         var p;
         var pp;
 
@@ -63,7 +55,6 @@ export class Payment extends Component {
             this.setState({
                 promotionPrice: pp
             });
-
         }
 
         this.setState({
@@ -113,7 +104,7 @@ export class Payment extends Component {
             expDate: data.expDate
         });
 
-        //POST  with payment
+        // POST with payment
 
         const requestOptions = {
             method: 'POST',
@@ -124,7 +115,6 @@ export class Payment extends Component {
                 cVV: data.CVV,
                 expDate: data.expDate,
                 reservationId: this.state.postId
-
             })
         };
 
@@ -135,41 +125,29 @@ export class Payment extends Component {
             postId: this.state.postId,
             price: this.state.price,
             promotionCode: this.state.promotionCode,
-            attempt: this.state.attempt
-            
+            attempt: this.state.attempt  
         }
 
         const myUrlWithParams = new URLSearchParams(parameters);
         console.log(parameters);
-
         window.location.href = "/paymentInformation?" + myUrlWithParams;
-        
     };
 
     render() {
-       
         let but;
         but = <button type={"submit"} className="reserve"> Zapłać </button>
         
-        
-
         return (
             <div className="border list-group-item mt-1 offer h5">
                 {this.state.attempt === "1" ? <h1>Zapłać</h1> :
                     <h1>Płatność nie powiodła się. Ponów próbę płatności</h1>}
                 <ChatForPayment param={ this.state}/>
                 <p>
-
                 </p>
-                <h5>
-                    Masz minutę na dokonanie płatności. Po tym czasie rezerwacja przepadnie
-                </h5>
+                <h5>Masz minutę na dokonanie płatności. Po tym czasie rezerwacja przepadnie</h5>
                 <p>
-
                 </p>
-
                 <div className="border list-group-item mt-1 offer h5">
-                    
                     <Form
                         onSubmit={this.handleSubmit}
                         render={(formRenderProps) => (
@@ -182,9 +160,7 @@ export class Payment extends Component {
                                             minLength={12}
                                             maxLength={12}
                                             pattern={"[0-9]+"}
-                                            component={Input}
-
-                                        />
+                                            component={Input}/>
                                     </div>
                                 </fieldset>
                                 <h5>CVV</h5>
@@ -195,9 +171,7 @@ export class Payment extends Component {
                                             minLength={3}
                                             maxLength={3}
                                             pattern={"[0-9]+"}
-                                            component={Input}
-
-                                        />
+                                            component={Input}/>
                                     </div>
                                 </fieldset>
                                 <h5>Imię i nazwisko</h5>
@@ -208,9 +182,7 @@ export class Payment extends Component {
                                             minLength={4}
                                             maxLength={35}
                                             pattern={"[a-zA-Z ]+"}
-                                            component={Input}
-
-                                        />
+                                            component={Input}/>
                                     </div>
                                 </fieldset>
                                 <h5>Data ważności karty mm/YY</h5>
@@ -221,26 +193,21 @@ export class Payment extends Component {
                                             minLength={5}
                                             maxLength={5}
                                             pattern={"[0-9/]+"}
-                                            component={Input}
-
-                                        />
+                                            component={Input}/>
                                     </div>
                                 </fieldset>
                                 <p>
-
                                 </p>
-                                <div >
+                                <div>
                                     <button
                                         type={"submit"}
-                                        className="log"
-                                    >
+                                        className="log">
                                         Zapłać
                                     </button>
                                 </div>
                             </FormElement>
                         )}
                     />
-
                 </div>
             </div>
         );

@@ -1,5 +1,4 @@
 ﻿import React from 'react';
-
 import MessageForReservation from './MessageForReservation';
 
 const ChatWindowForReservation = (props) => {

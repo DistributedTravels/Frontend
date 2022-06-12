@@ -1,9 +1,8 @@
 ﻿import React, { useState, useEffect, useRef } from 'react';
 import { HubConnectionBuilder } from '@microsoft/signalr';
-
 import ChatWindowForChanges from './ChatWindowForChanges';
-
 import axios from 'axios';
+
 const webAPI_URL = "http://localhost:8090";
 const changesROUTE = "/Offers/GetLastChanges";
 
@@ -29,9 +28,7 @@ const ChatForChanges = () => {
                 console.log(res.data);
 
                 setChat(updatedChat);
-
             })
-
 
         const newConnection = new HubConnectionBuilder()
             .withUrl('http://localhost:8090/hubs/events')
@@ -64,8 +61,6 @@ const ChatForChanges = () => {
                 .catch(e => console.log('Connection failed: ', e));
         }
     }, [connection]);
-
-
 
     return (
         <div>

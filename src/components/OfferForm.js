@@ -3,12 +3,9 @@ import { Form, Field } from "@progress/kendo-react-form";
 import { NumberInput } from './formComponents'
 import { DropDown } from './formComponents'
 
-
 const searchParams = new URLSearchParams(window.location.search);
 
 export class OfferForm extends Component {
-
-
     constructor(props) {
         super(props);
     }
@@ -29,8 +26,6 @@ export class OfferForm extends Component {
         wifiList: [],
         breakfastList: [],
         transportList: []
-
-
     }
 
     componentDidMount() {
@@ -81,10 +76,7 @@ export class OfferForm extends Component {
         }
     }
     
-
     handleSubmit = (data) => {
-       
-
         if (data.number_of_2_room === undefined) {
             data.number_of_2_room = "0";
         }
@@ -100,7 +92,6 @@ export class OfferForm extends Component {
         if (data.wifi === undefined) {
             data.wifi = "Nie";
         }
-
 
         const parameters = {
             offerId: this.state.offerId,
@@ -123,7 +114,6 @@ export class OfferForm extends Component {
         }
         console.log(parameters);
         const myUrlWithParams = new URLSearchParams(parameters);
-
         window.location.href = "/reservation?" + myUrlWithParams;
     };
 
@@ -131,7 +121,6 @@ export class OfferForm extends Component {
         return (
             <div>
                 <h1>Oferta</h1>
-
                 <div>
                     <div className="border list-group-item mt-1 offer h5">
                         <Form
@@ -142,11 +131,9 @@ export class OfferForm extends Component {
                                 transport: "Dojazd własny",
                                 breakfast: "Nie",
                                 wifi: "Nie"
-
                             }}
                             render={(formRenderProps) => (
                                 <form onSubmit={formRenderProps.onSubmit}>
-
                                     <Field
                                         label="Liczba pokojów 2-osobowych"
                                         name="number_of_2_room"
@@ -154,7 +141,6 @@ export class OfferForm extends Component {
                                         minValue="0"
                                         maxValue="5"
                                         component={NumberInput} />
-
                                     <Field
                                         label="Liczba apartamentów"
                                         name="number_of_apartaments"
@@ -177,13 +163,9 @@ export class OfferForm extends Component {
                                         name="transport"
                                         component={DropDown}
                                         options={this.state.transportList} />
-
                                     <p>
-
                                     </p>
-
                                     <input type="submit" value="Sprawdź ofertę" onClick={this.handleSubmit} />
-
                                 </form>
                             )}>
                         </Form>
@@ -193,4 +175,3 @@ export class OfferForm extends Component {
         );
     }
 }
-

@@ -1,8 +1,6 @@
 ﻿import React, { useState, useEffect, useRef } from 'react';
 import { HubConnectionBuilder } from '@microsoft/signalr';
-
 import ChatWindow from './ChatWindow';
-
 
 const Chat = (param) => {
     const [connection, setConnection] = useState(null);
@@ -42,18 +40,15 @@ const Chat = (param) => {
 
                         if (param.param.hotelName === message.hotelName && param.param.destination === message.destination) {
                             setChat(updatedChat);
-                        }
-                        
+                        } 
                     });
                 })
                 .catch(e => console.log('Connection failed: ', e));
         }
     }, [connection]);
 
-
     return (
         <div>
-          
             <hr />
                 <ChatWindow chat={chat} /> 
         </div>

@@ -1,11 +1,9 @@
 ﻿import React, { Component } from 'react';
-
 import { Form, Field, FormElement } from "@progress/kendo-react-form";
 import { Input } from "@progress/kendo-react-inputs";
+
 const webAPI_URL = "http://localhost:8090";
 const userROUTE = "/Login/Auth";
-
-const equals = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 
 export class Login extends Component {
     constructor(props) {
@@ -21,11 +19,9 @@ export class Login extends Component {
         this.setState({
             user: data.login,
             password: data.password
-            
         });
 
-        //POST user
-
+        // POST user
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -38,14 +34,12 @@ export class Login extends Component {
         const response = await fetch(webAPI_URL + userROUTE, requestOptions);
 
         if (!response.ok) {
-
             const parameters = {
                 user: data.login,
                 userExists: false
             };
 
             const myUrlWithParams = new URLSearchParams(parameters);
-
             window.location.href = "/loginInformation?" + myUrlWithParams;
         }
         else {
@@ -65,16 +59,11 @@ export class Login extends Component {
             const parameters = {
                 user: data.login,
                 userExists: true
-
             };
 
             const myUrlWithParams = new URLSearchParams(parameters);
-
             window.location.href = "/loginInformation?" + myUrlWithParams;
         }
-
-        
-
     };
 
     render() {
@@ -82,11 +71,8 @@ export class Login extends Component {
             <div className="border list-group-item mt-1 offer h5">
                 <h1>Zaloguj się</h1>
                 <p>
-
                 </p>
-
                 <div className="border list-group-item mt-1 offer h5">
-
                     <Form
                         onSubmit={this.handleSubmit}
                         render={(formRenderProps) => (
@@ -97,10 +83,7 @@ export class Login extends Component {
                                         <Field
                                             name={"login"}
                                             minLength={2}
-                                           
-                                            component={Input}
-
-                                        />
+                                            component={Input}/>
                                     </div>
                                 </fieldset>
                                 <h5>Hasło</h5>
@@ -108,31 +91,23 @@ export class Login extends Component {
                                     <div>
                                         <Field
                                             name={"password"}
-                                            minLength={2}
-                                            
+                                            minLength={2}                                            
                                             type="password"
-                                            component={Input}
-
-                                        />
+                                            component={Input}/>
                                     </div>
                                 </fieldset>
                                 <p>
-
                                 </p>
                                 <div >
                                     <button
                                         type={"submit"}
-                                        className="log"
-                                        >
+                                        className="log">
                                         Zaloguj się
                                     </button>
                                 </div>
                             </FormElement>
-                        )}
-                    />
+                        )}/>
                 </div>
-
-
             </div>
         );
     }

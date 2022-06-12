@@ -1,11 +1,7 @@
 ﻿import React, { useState, useEffect, useRef } from 'react';
 import { HubConnectionBuilder } from '@microsoft/signalr';
-
 import ChatWindowForPayment from './ChatWindowForPayment';
 
-import axios from 'axios';
-const webAPI_URL = "http://localhost:8090";
-const offersAvailableROUTE = "/Offers/CheckOfferAvailability";
 const searchParams = new URLSearchParams(window.location.search);
 
 const ChatForPayment = (param) => {
@@ -29,9 +25,7 @@ const ChatForPayment = (param) => {
             promotionCode: searchParams.get("promotionCode")
         };
         updatedChat.push(mesObj);
-
         setChat(updatedChat);
-
 
         const newConnection = new HubConnectionBuilder()
             .withUrl('http://localhost:8090/hubs/events')
@@ -72,19 +66,14 @@ const ChatForPayment = (param) => {
                         if (param.param.hotelName === message.newOffer.hotelName && param.param.destination === message.newOffer.destination) {
                             setChat(updatedChat);
                         }
-
-
                     });
                 })
                 .catch(e => console.log('Connection failed: ', e));
         }
     }, [connection]);
 
-
-
     return (
         <div>
-
             <hr />
             <ChatWindowForPayment chat={chat} />
         </div>

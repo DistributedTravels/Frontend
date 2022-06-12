@@ -3,30 +3,25 @@ import { Collapse, Container, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLi
 import { Link} from 'react-router-dom';
 import './NavMenu.css';
 
-
 export class NavMenu extends Component {
     static displayName = NavMenu.name;
-    
-
-  constructor (props) {
-      super(props);
-
-      this.toggle = this.toggle.bind(this);
-      this.state = {
-          dropdownOpen: false,
-      };
+   
+    constructor (props) {
+        super(props);
+        this.toggle = this.toggle.bind(this);
+        this.state = {
+            dropdownOpen: false,
+        };
       
-
-    this.toggleNavbar = this.toggleNavbar.bind(this);
-    this.state = {
-        collapsed: true
-    };
+        this.toggleNavbar = this.toggleNavbar.bind(this);
+        this.state = {
+            collapsed: true
+        };
     }
 
     toggle() {
         this.setState(prevState => ({
             dropdownOpen: !prevState.dropdownOpen
-          
         }));
     }
 
@@ -37,18 +32,15 @@ export class NavMenu extends Component {
     }
 
     logout() {
-       
         sessionStorage.clear();
         window.location.href = "/login"
-}
-
+    }
 
     render() {
         let data = sessionStorage.getItem('user-key');
         if (!(data === null)) {
             data = JSON.parse(data);
         }
-
         
     return (
       <header>
@@ -70,22 +62,16 @@ export class NavMenu extends Component {
 
                 {sessionStorage.getItem('user-key') ?
                     <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-                        <DropdownToggle caret>
-                                        {data.user}
-                        </DropdownToggle>
+                        <DropdownToggle caret>{data.user}</DropdownToggle>
                         <DropdownMenu>
-
                             <DropdownItem onClick={this.logout}>Wyloguj</DropdownItem>
                             <DropdownItem tag={Link} className="text-dark" to="/myAccount">Moje konto</DropdownItem>
-
                         </DropdownMenu>
                     </Dropdown>:
                     <NavItem>
                         <NavLink tag={Link} className="text-dark" to="/login">Zaloguj</NavLink>
                     </NavItem>
                 }
-                            
-                
               </ul>
             </Collapse>
           </Container>

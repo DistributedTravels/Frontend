@@ -42,10 +42,9 @@ import './custom.css'
 export default class App extends Component {
     static displayName = App.name;
 
-  render () {
+    render() {
     return (
         <Layout>
-
         <Route exact path='/' component={Home} />
         <Route path='/destinations' component={Destinations} />
             <Route path="/login" component={Login} />
@@ -80,7 +79,7 @@ export default class App extends Component {
             <Route path="/chatForAccount" component={ChatForAccount} />
             <Route path="/chatWindowForAccount" component={ChatWindowForAccount} />
             <Route path="/messageForAccount" component={MessageForAccount} />
-      </Layout>
-    );
-  }
+        </Layout>
+        );
+    }
 }

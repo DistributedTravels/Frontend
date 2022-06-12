@@ -12,7 +12,6 @@ const MessageForDestinations = (props) => (
             <p>{props.destination3}</p>
         </div>
     </div>
-
 );
 
 export default MessageForDestinations;

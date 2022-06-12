@@ -1,5 +1,4 @@
 ﻿import React from 'react';
-
 import MessageForPrice from './MessageForPrice';
 
 const ChatWindowForPrice = (props) => {

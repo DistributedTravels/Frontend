@@ -1,6 +1,5 @@
 ﻿import React, { Component } from "react";
 import { Offer } from './Offer';
-
 import { Form, Field } from "@progress/kendo-react-form";
 import { DateInput } from './formComponents'
 import { NumberInputAdults } from './formComponents'
@@ -16,7 +15,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-daterangepicker/daterangepicker.css';
 
 import axios from 'axios';
-
 import ChatForDestinations from './ChatForDestinations';
 import ChatForOffers from './ChatForOffers';
 
@@ -28,10 +26,7 @@ var baseDate2 = "07/09/2022";
 
 const searchParams = new URLSearchParams(window.location.search);
 
-
 export class CheckOfferForDestination extends Component {
-
-
     state = {
         showOffers: true,
         searchingParam: {
@@ -53,12 +48,10 @@ export class CheckOfferForDestination extends Component {
         console.log(this.state.searchingParam.destination);
         console.log(searchParams.get("destination"));
 
-
         const myUrlWithParams = new URL(webAPI_URL + offersROUTE);
 
         const date = this.state.searchingParam.when;
         const dates = date.split("-");
-
 
         var start = dates[0].replaceAll("/", "-");
         start = start.replaceAll(" ", "");
@@ -81,15 +74,12 @@ export class CheckOfferForDestination extends Component {
                         ...this.state.searchingParam,
                         offers: res.data,
                         beforeSearch: false
-
                     }
                 });
-
             })
     }
 
     handleSubmit = (data) => {
-
         this.setState({
             searchingParam: {
                 ...this.state.searchingParam,
@@ -105,11 +95,8 @@ export class CheckOfferForDestination extends Component {
         });
 
         const myUrlWithParams = new URL(webAPI_URL + offersROUTE);
-
         const date = data.when;
         const dates = date.split("-");
-
-
         var start = dates[0].replaceAll("/", "-");
         start = start.replaceAll(" ", "");
         var end = dates[1].replaceAll("/", "-");
@@ -131,10 +118,8 @@ export class CheckOfferForDestination extends Component {
                         ...this.state.searchingParam,
                         offers: res.data,
                         beforeSearch: false
-
                     }
                 });
-
             })
     };
 
@@ -156,28 +141,23 @@ export class CheckOfferForDestination extends Component {
                                 children_under_3: "0",
                                 children_under_10: "0",
                                 children_under_18: "0"
-
                             }}
                             render={(formRenderProps) => (
                                 <form onSubmit={formRenderProps.onSubmit}>
-
                                     <Field
                                         label="Miejsce docelowe"
                                         name="destination"
                                         component={DropDown}
                                         options={destination_dataset} />
-
                                     <Field
                                         label="Miejsce wyjazdu"
                                         name="departure"
                                         component={DropDown}
                                         options={departure_dataset} />
-
                                     <Field
                                         label="Termin"
                                         name="when"
                                         component={DateInput} />
-
                                     <Field
                                         label="Liczba osób dorosłych"
                                         name="adults"
@@ -185,7 +165,6 @@ export class CheckOfferForDestination extends Component {
                                         minValue="1"
                                         maxValue="5"
                                         component={NumberInputAdults} />
-
                                     <Field
                                         label="Liczba dzieci w wieku do 3 lat"
                                         name="children_under_3"
@@ -193,7 +172,6 @@ export class CheckOfferForDestination extends Component {
                                         minValue="0"
                                         maxValue="3"
                                         component={NumberInputChildren} />
-
                                     <Field
                                         label="Liczba dzieci w wieku do 10 lat"
                                         name="children_under_10"
@@ -201,7 +179,6 @@ export class CheckOfferForDestination extends Component {
                                         minValue="0"
                                         maxValue="3"
                                         component={NumberInputChildren} />
-
                                     <Field
                                         label="Liczba dzieci w wieku do 18 lat"
                                         name="children_under_18"
@@ -209,14 +186,9 @@ export class CheckOfferForDestination extends Component {
                                         minValue="0"
                                         maxValue="3"
                                         component={NumberInputChildren} />
-
                                     <p>
-
                                     </p>
-
                                     <input type="submit" value="Szukaj" />
-
-
                                 </form>
                             )}>
                         </Form>
@@ -235,16 +207,10 @@ export class CheckOfferForDestination extends Component {
                         <div class="row">
                             <h3>TOP 3 oferty </h3>
                             <ChatForOffers />
-
                         </div>
                     </div>
                 </div>
-
-
-
             </div>
-
-
         );
     }
 }
